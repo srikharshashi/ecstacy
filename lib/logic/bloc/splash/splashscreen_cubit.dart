@@ -1,5 +1,5 @@
 import 'package:bloc/bloc.dart';
-import 'package:bloc_custom_firebase/services/fb_service.dart';
+import 'package:bloc_custom_firebase/services/fb_auth_service.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:meta/meta.dart';
 
@@ -16,7 +16,7 @@ class SplashscreenCubit extends Cubit<SplashscreenState> {
   void initialize() async {
     print("In splashscreen cubit");
     await fb_service.initializeFirebase();
-    await Future.delayed(Duration(seconds: 3));
+    await Future.delayed(Duration(seconds: 2));
     var connectivityResult = await (Connectivity().checkConnectivity());
 
     if (connectivityResult == ConnectivityResult.none) {

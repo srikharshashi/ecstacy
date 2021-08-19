@@ -110,4 +110,16 @@ class FB_Service {
       return false;
     }
   }
+
+String? get_user_email()
+{
+  var user=FirebaseAuth.instance.currentUser;
+   if(user!=null)
+   {
+     return user.email;
+   }
+   else
+   return "";
+}
+
 }

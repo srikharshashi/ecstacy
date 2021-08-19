@@ -1,5 +1,5 @@
 import 'package:bloc/bloc.dart';
-import 'package:bloc_custom_firebase/services/fb_service.dart';
+import 'package:bloc_custom_firebase/services/fb_auth_service.dart';
 import 'package:meta/meta.dart';
 
 part 'register_state.dart';
