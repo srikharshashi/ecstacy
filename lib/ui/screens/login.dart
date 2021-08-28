@@ -144,7 +144,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       horizontal: 80.0, vertical: 30),
                   child: InkWell(
                     onTap: () {
-                      Navigator.pushNamed(context, REGISTER_PAGE);
+                      Navigator.pushNamed(context, REGISTER_PAGE1);
                     },
                     child: Container(
                       height: 35,

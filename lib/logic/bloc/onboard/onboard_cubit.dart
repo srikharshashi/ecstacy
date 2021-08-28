@@ -23,14 +23,14 @@ class OnboardCubit extends Cubit<OnboardState> {
           await dataBaseService.verifygoogleuser(fb.get_user_email());
       if (old_user) {
         emit(OnboardHome());
-      }
-      else
-      emit(OnboardRegister());
+      } else
+        emit(OnboardRegister());
     } else
       emit(OnboardError());
   }
 
   void reload() {
+    print("In reload");
     emit(OnboardInitial());
   }
 }

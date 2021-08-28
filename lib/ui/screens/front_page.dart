@@ -14,6 +14,12 @@ class FrontPage extends StatefulWidget {
 
 class _FrontPageState extends State<FrontPage> {
   @override
+  void initState() {
+    super.initState();
+    BlocProvider.of<OnboardCubit>(context).reload();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Padding(

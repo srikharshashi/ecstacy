@@ -8,6 +8,7 @@ import 'package:bloc_custom_firebase/services/fb_auth_service.dart';
 import 'package:bloc_custom_firebase/services/fb_db.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'logic/bloc/google_register/google_register_cubit.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -33,6 +34,9 @@ class MyApp extends StatelessWidget {
         BlocProvider(
             create: (context) => OnboardCubit(
                 fb: FB_Service(), dataBaseService: DataBaseService())),
+        BlocProvider(
+          create: (context) => GoogleRegisterCubit(fb_service: FB_Service()),
+        ),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
