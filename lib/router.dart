@@ -20,7 +20,7 @@ class AppRouter {
       case HOME_ROUTE:
         return MaterialPageRoute(builder: (context) => Home());
       case REGISTER_PAGE1:
-        return MaterialPageRoute(builder: (context) => Register());
+        return MaterialPageRoute(builder: (context) => Reg1());
       case REGISTER_PAGE2:
         return MaterialPageRoute(builder: (c0ntext) => Reg2());
       case REGISTER_PAGE3:

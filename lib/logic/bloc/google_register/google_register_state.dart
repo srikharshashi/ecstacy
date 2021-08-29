@@ -10,3 +10,11 @@ abstract class GoogleRegisterState extends Equatable {
 class GoogleRegisterInitial extends GoogleRegisterState {}
 
 class GoogleRegisterInterupt extends GoogleRegisterState{}
+
+class Register1Done extends GoogleRegisterState{}
+
+class Register2Done extends GoogleRegisterState{}
+
+class Register3Done extends GoogleRegisterState{}
+
+class Register4Done extends GoogleRegisterState{}

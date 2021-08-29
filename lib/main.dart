@@ -1,3 +1,4 @@
+import 'package:bloc_custom_firebase/logic/bloc/gender_cubit/gender_cubit.dart';
 import 'package:bloc_custom_firebase/logic/bloc/login/login_cubit.dart';
 import 'package:bloc_custom_firebase/logic/bloc/logout/logout_cubit.dart';
 import 'package:bloc_custom_firebase/logic/bloc/onboard/onboard_cubit.dart';
@@ -21,6 +22,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
+        BlocProvider(create: (context) => GenderCubit()),
         BlocProvider(
             create: (context) => SplashscreenCubit(fb_service: FB_Service())),
         BlocProvider(
