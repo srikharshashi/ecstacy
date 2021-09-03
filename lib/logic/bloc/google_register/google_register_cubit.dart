@@ -20,6 +20,7 @@ class GoogleRegisterCubit extends Cubit<GoogleRegisterState> {
     print("In cubit off register page");
     emit(GoogleRegisterInterupt());
     await fb_service.logout();
+    reset();
   }
 
   void update_page(int num) {
@@ -35,4 +36,7 @@ class GoogleRegisterCubit extends Cubit<GoogleRegisterState> {
   void reset() {
     emit(GoogleRegisterInitial());
   }
+
+  
+
 }
