@@ -4,6 +4,7 @@ import 'package:bloc_custom_firebase/logic/bloc/logout/logout_cubit.dart';
 import 'package:bloc_custom_firebase/logic/bloc/onboard/onboard_cubit.dart';
 import 'package:bloc_custom_firebase/logic/bloc/register/register_cubit.dart';
 import 'package:bloc_custom_firebase/logic/bloc/splash/splashscreen_cubit.dart';
+import 'package:bloc_custom_firebase/logic/bloc/theme_cubit/theme_cubit.dart';
 import 'package:bloc_custom_firebase/router.dart';
 import 'package:bloc_custom_firebase/services/fb_auth_service.dart';
 import 'package:bloc_custom_firebase/services/fb_db.dart';
@@ -17,7 +18,7 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  final AppRouter appRouter = AppRouter();  
+  final AppRouter appRouter = AppRouter();
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
@@ -39,12 +40,19 @@ class MyApp extends StatelessWidget {
         BlocProvider(
           create: (context) => GoogleRegisterCubit(fb_service: FB_Service()),
         ),
+        BlocProvider(
+          create: (context) => ThemeCubit(),
+        )
       ],
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: 'Material App',
-        onGenerateRoute: appRouter.onGenerateRoute,
-      ),
+      child:
+          BlocBuilder<ThemeCubit, ThemeState>(builder: (context, themestate) {
+        return MaterialApp(
+          debugShowCheckedModeBanner: false,
+          title: 'Material App',
+          onGenerateRoute: appRouter.onGenerateRoute,
+          theme: themestate.themeData,
+        );
+      }),
     );
   }
 }

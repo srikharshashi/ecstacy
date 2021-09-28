@@ -1,5 +1,3 @@
-import 'package:bloc_custom_firebase/services/fb_db.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 
 class User {
   late String name;

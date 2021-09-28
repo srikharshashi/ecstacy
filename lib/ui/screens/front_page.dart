@@ -1,5 +1,6 @@
 import 'package:bloc_custom_firebase/constants.dart';
 import 'package:bloc_custom_firebase/logic/bloc/onboard/onboard_cubit.dart';
+import 'package:bloc_custom_firebase/logic/bloc/theme_cubit/theme_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -22,6 +23,11 @@ class _FrontPageState extends State<FrontPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          BlocProvider.of<ThemeCubit>(context).changetheme(Theme.of(context));
+        },
+      ),
       body: Padding(
         padding: EdgeInsets.all(30),
         child: Center(
@@ -33,10 +39,7 @@ class _FrontPageState extends State<FrontPage> {
               Center(
                   child: Text(
                 "Ecstacy",
-                style: GoogleFonts.pacifico(
-                  fontSize: 35,
-                  fontWeight: FontWeight.w300,
-                ),
+                style: Theme.of(context).textTheme.headline1,
               )),
               SizedBox(
                 height: 50,
@@ -98,8 +101,13 @@ class _FrontPageState extends State<FrontPage> {
                                     decoration: BoxDecoration(
                                         shape: BoxShape.circle,
                                         border: Border.all(
-                                            color: Colors.black, width: 2.5)),
-                                    child: Icon(FontAwesomeIcons.google),
+                                            color:
+                                                Theme.of(context).primaryColor,
+                                            width: 2.5)),
+                                    child: Icon(
+                                      FontAwesomeIcons.google,
+                                      color: Theme.of(context).iconTheme.color,
+                                    ),
                                   ),
                                 ),
                                 InkWell(
@@ -112,7 +120,9 @@ class _FrontPageState extends State<FrontPage> {
                                     decoration: BoxDecoration(
                                         shape: BoxShape.circle,
                                         border: Border.all(
-                                            color: Colors.black, width: 2.5)),
+                                            color:
+                                                Theme.of(context).primaryColor,
+                                            width: 2.5)),
                                     child: Icon(FontAwesomeIcons.phoneAlt),
                                   ),
                                 )
@@ -120,7 +130,7 @@ class _FrontPageState extends State<FrontPage> {
                             );
                           else if (state is OnboardLoad) {
                             return SpinKitCubeGrid(
-                              color: Colors.black,
+                              color: Theme.of(context).primaryColor,
                             );
                           } else
                             return Container();

@@ -30,13 +30,12 @@ class GoogleRegisterCubit extends Cubit<GoogleRegisterState> {
       emit(Register2Done());
     else if (num == 3)
       emit(Register3Done());
-    else if (num == 4) emit(Register4Done());
+    else if (num == 4)
+      emit(Register4Done());
+    else if (num == 5) emit(Register5Done());
   }
 
   void reset() {
     emit(GoogleRegisterInitial());
   }
-
-  
-
 }

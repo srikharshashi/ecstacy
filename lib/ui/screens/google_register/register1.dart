@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:bloc_custom_firebase/logic/bloc/gender_cubit/gender_cubit.dart';
 import 'package:bloc_custom_firebase/logic/bloc/google_register/image_uploader/image_uploader_cubit.dart';
 import 'package:bloc_custom_firebase/logic/bloc/register/register_cubit.dart';
+import 'package:bloc_custom_firebase/logic/bloc/theme_cubit/theme_cubit.dart';
 import 'package:bloc_custom_firebase/services/fb_storage.dart';
 import 'package:bloc_custom_firebase/services/models/user_model.dart';
 import "package:flutter/material.dart";
@@ -53,11 +54,14 @@ class _Reg1State extends State<Reg1> with WidgetsBindingObserver {
     }
   }
 
-  TextEditingController name_controller = TextEditingController();
-  TextEditingController number_controller = TextEditingController();
-  TextEditingController bio_controller = TextEditingController();
-
-  User current_user = User();
+  TextEditingController name_controller = TextEditingController(); //done
+  TextEditingController number_controller = TextEditingController(); //done
+  TextEditingController bio_controller = TextEditingController(); //done
+  TextEditingController phone_controller = TextEditingController(); //done
+  TextEditingController gender_controller = TextEditingController(); //done
+  //get email rom firebase user
+  TextEditingController photourl_controller = TextEditingController();
+  // User current_user = User();
 
   Future<File?> pickimage() async {
     try {
@@ -73,14 +77,18 @@ class _Reg1State extends State<Reg1> with WidgetsBindingObserver {
 
   @override
   Widget build(BuildContext context) {
-    bool enable = false;
+    bool gender_enable = false;
+    bool photo_enable = false;
 
     return BlocProvider(
       create: (context) => ImageUploaderCubit(),
       child: BlocListener<ImageUploaderCubit, ImageUploaderState>(
         listener: (context, state) {
-          if (state is ImageUploader1done)
-            current_user.photoURL = (state as ImageUploader1done).img1url;
+          if (state is ImageUploader1done) {
+            print("In bloc listner photo uploaded");
+            photourl_controller.text = (state as ImageUploader1done).img1url;
+            photo_enable = ((state as ImageUploader1done)).enable;
+          }
         },
         child: BlocListener<GoogleRegisterCubit, GoogleRegisterState>(
           listener: (context, state) {
@@ -91,25 +99,32 @@ class _Reg1State extends State<Reg1> with WidgetsBindingObserver {
             }
           },
           child: Scaffold(
+            floatingActionButton: FloatingActionButton(
+              onPressed: () {
+                BlocProvider.of<ThemeCubit>(context)
+                    .changetheme(Theme.of(context));
+              },
+            ),
             resizeToAvoidBottomInset: false,
             appBar: AppBar(
               actions: [
                 IconButton(
                     onPressed: () {
                       BlocProvider.of<GoogleRegisterCubit>(context).logout();
+                      BlocProvider.of<GenderCubit>(context).reset();
                     },
-                    icon: Icon(FontAwesomeIcons.powerOff)),
+                    icon: Icon(
+                      FontAwesomeIcons.powerOff,
+                      color: Theme.of(context).iconTheme.color,
+                    )),
               ],
               backgroundColor: Colors.transparent,
-              actionsIconTheme: IconThemeData(color: Colors.black),
+              actionsIconTheme: Theme.of(context).iconTheme,
               elevation: 0,
               centerTitle: true,
               title: Text(
                 "Ecstacy",
-                style: GoogleFonts.pacifico(
-                    fontSize: 32,
-                    fontWeight: FontWeight.w300,
-                    color: Colors.black),
+                style: Theme.of(context).textTheme.headline1,
               ),
             ),
             body: Padding(
@@ -162,13 +177,13 @@ class _Reg1State extends State<Reg1> with WidgetsBindingObserver {
                               return BlocListener<GenderCubit, GenderState>(
                                 listener: (context, state) {
                                   if (state is MaleSelect) {
-                                    current_user.gender = "M";
-                                    enable = true;
+                                    gender_controller.text = "M";
+                                    gender_enable = true;
                                   } else if (state is FemaleSelect) {
-                                    current_user.gender = "F";
-                                    enable = true;
+                                    gender_controller.text = "F";
+                                    gender_enable = true;
                                   } else if (state is OtherSelect) {
-                                    current_user.gender = "O";
+                                    gender_controller.text = "O";
                                   }
                                 },
                                 child: GenderSelect(),
@@ -195,7 +210,7 @@ class _Reg1State extends State<Reg1> with WidgetsBindingObserver {
                                         decoration: InputDecoration(
                                           hintText: "Enter a bio",
                                           fillColor: Colors.grey[300],
-                                          filled: true,
+                                          // filled: true,
                                         ),
                                       ),
                                     ),
@@ -278,15 +293,15 @@ class _Reg1State extends State<Reg1> with WidgetsBindingObserver {
                                           MainAxisAlignment.spaceAround,
                                       children: [
                                         Text(
-                                          "Please wait till we update it",
+                                          "Please wait till we upload it",
                                           style: GoogleFonts.montserrat(
                                               fontSize: 18,
                                               fontWeight: FontWeight.w600),
                                         ),
                                         Container(
                                           child: SpinKitDoubleBounce(
-                                            color: Colors.black,
-                                          ),
+                                              color: Theme.of(context)
+                                                  .primaryColor),
                                         ),
                                       ],
                                     );
@@ -337,8 +352,8 @@ class _Reg1State extends State<Reg1> with WidgetsBindingObserver {
                                                             spreadRadius:
                                                                 0.2, //extend the shadow
                                                             offset: Offset(
-                                                              5.0, // Move to right 10  horizontally
-                                                              5.0, // Move to bottom 10 Vertically
+                                                              2.0, // Move to right 10  horizontally
+                                                              2.0, // Move to bottom 10 Vertically
                                                             ),
                                                           ),
                                                         ],
@@ -374,9 +389,14 @@ class _Reg1State extends State<Reg1> with WidgetsBindingObserver {
                                     return Container();
                                 },
                               );
-                            } else
+                            } else if (state is Register5Done) {
+                              return Container(
+                                child: Text("cdf"),
+                              );
+                            } else {
                               return Container();
-                          },
+                            }
+                          }, //builder close
                         ),
                       ),
                     ),
@@ -420,7 +440,6 @@ class _Reg1State extends State<Reg1> with WidgetsBindingObserver {
                                             .page);
                                 BlocProvider.of<GoogleRegisterCubit>(context)
                                     .page += 1;
-                                current_user.name = name_controller.text;
                               } else {
                                 ScaffoldMessenger.of(context).showSnackBar(
                                     SnackBar(
@@ -437,7 +456,6 @@ class _Reg1State extends State<Reg1> with WidgetsBindingObserver {
                                             .page);
                                 BlocProvider.of<GoogleRegisterCubit>(context)
                                     .page += 1;
-                                current_user.phno = number_controller.text;
                               } else {
                                 ScaffoldMessenger.of(context).showSnackBar(
                                     SnackBar(
@@ -446,7 +464,7 @@ class _Reg1State extends State<Reg1> with WidgetsBindingObserver {
                               }
                             } else if (num == 3) {
                               print("Page 3");
-                              if (enable) {
+                              if (gender_enable) {
                                 BlocProvider.of<GoogleRegisterCubit>(context)
                                     .update_page(
                                         BlocProvider.of<GoogleRegisterCubit>(
@@ -475,11 +493,30 @@ class _Reg1State extends State<Reg1> with WidgetsBindingObserver {
                                         content: Text(
                                             "Enter a valid bio > 8 words!")));
                               }
+                            } else if (num == 5) {
+                              print("In 5");
+                              if (photo_enable) {
+                                print("In button photo uploaded");
+
+                                print("here");
+                                BlocProvider.of<GoogleRegisterCubit>(context)
+                                    .update_page(
+                                        BlocProvider.of<GoogleRegisterCubit>(
+                                                context)
+                                            .page);
+                                BlocProvider.of<GoogleRegisterCubit>(context)
+                                    .page += 1;
+                              } else {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                        content: Text("Chose a picture!")));
+                              }
                             }
                           },
                           child: Container(
                             decoration: BoxDecoration(
-                              border: Border.all(color: Colors.black),
+                              border: Border.all(
+                                  color: Theme.of(context).primaryColor),
                               borderRadius: BorderRadius.circular(40),
                             ),
                             child: Row(
@@ -504,310 +541,6 @@ class _Reg1State extends State<Reg1> with WidgetsBindingObserver {
               ),
             ),
           ),
-        ),
-      ),
-    );
-  }
-}
-
-class NameField extends StatelessWidget {
-  TextEditingController namecontroller;
-  NameField({
-    Key? key,
-    required this.namecontroller,
-  }) : super(key: key);
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: [
-          Text(
-            "Enter your name",
-            style: GoogleFonts.montserrat(
-              fontSize: 20,
-              fontWeight: FontWeight.w600,
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 30.0),
-            child: TextField(
-              controller: namecontroller,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class NumberField extends StatelessWidget {
-  TextEditingController numbercontroller;
-  NumberField({
-    Key? key,
-    required this.numbercontroller,
-  }) : super(key: key);
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: [
-          Text(
-            "Enter your Number",
-            style: GoogleFonts.montserrat(
-              fontSize: 20,
-              fontWeight: FontWeight.w600,
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 30.0),
-            child: TextField(
-              controller: numbercontroller,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class GenderSelect extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      alignment: Alignment.center,
-      margin: EdgeInsets.all(10),
-      decoration: BoxDecoration(
-          // border: Border.all(color: Colors.blue),
-          ),
-      child: Column(
-        children: [
-          Text(
-            "Select your gender",
-            style: GoogleFonts.montserrat(
-              fontSize: 20,
-              fontWeight: FontWeight.w600,
-            ),
-          ),
-          SizedBox(
-            height: 20,
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 5),
-            child: BlocBuilder<GenderCubit, GenderState>(
-              builder: (context, state) {
-                if (state is GenderInitial) {
-                  return Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Expanded(
-                        child: InkWell(
-                          onTap: () {
-                            BlocProvider.of<GenderCubit>(context).maleSelect();
-                          },
-                          child: GenderCont(
-                            gender: "Male",
-                            icon: FontAwesomeIcons.male,
-                            color: Colors.black,
-                          ),
-                        ),
-                      ),
-                      Expanded(
-                        child: InkWell(
-                          onTap: () {
-                            BlocProvider.of<GenderCubit>(context)
-                                .femaleSelect();
-                          },
-                          child: GenderCont(
-                            gender: "Female",
-                            icon: FontAwesomeIcons.female,
-                            color: Colors.black,
-                          ),
-                        ),
-                      ),
-                      Expanded(
-                        child: InkWell(
-                          onTap: () {
-                            BlocProvider.of<GenderCubit>(context).otherselect();
-                          },
-                          child: GenderCont(
-                            gender: "Others",
-                            icon: FontAwesomeIcons.flag,
-                            color: Colors.black,
-                          ),
-                        ),
-                      )
-                    ],
-                  );
-                } else if (state is MaleSelect) {
-                  return Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Expanded(
-                        child: InkWell(
-                          onTap: () {
-                            BlocProvider.of<GenderCubit>(context).maleSelect();
-                          },
-                          child: GenderCont(
-                            gender: "Male",
-                            icon: FontAwesomeIcons.male,
-                            color: Colors.white,
-                          ),
-                        ),
-                      ),
-                      Expanded(
-                        child: InkWell(
-                          onTap: () {
-                            BlocProvider.of<GenderCubit>(context)
-                                .femaleSelect();
-                          },
-                          child: GenderCont(
-                            gender: "Female",
-                            icon: FontAwesomeIcons.female,
-                            color: Colors.black,
-                          ),
-                        ),
-                      ),
-                      Expanded(
-                        child: InkWell(
-                          onTap: () {
-                            BlocProvider.of<GenderCubit>(context).otherselect();
-                          },
-                          child: GenderCont(
-                            gender: "Others",
-                            icon: FontAwesomeIcons.flag,
-                            color: Colors.black,
-                          ),
-                        ),
-                      )
-                    ],
-                  );
-                } else if (state is FemaleSelect) {
-                  return Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Expanded(
-                        child: InkWell(
-                          onTap: () {
-                            BlocProvider.of<GenderCubit>(context).maleSelect();
-                          },
-                          child: GenderCont(
-                            gender: "Male",
-                            icon: FontAwesomeIcons.male,
-                            color: Colors.black,
-                          ),
-                        ),
-                      ),
-                      Expanded(
-                        child: InkWell(
-                          onTap: () {
-                            BlocProvider.of<GenderCubit>(context)
-                                .femaleSelect();
-                          },
-                          child: GenderCont(
-                            gender: "Female",
-                            icon: FontAwesomeIcons.female,
-                            color: Colors.white,
-                          ),
-                        ),
-                      ),
-                      Expanded(
-                        child: InkWell(
-                          onTap: () {
-                            BlocProvider.of<GenderCubit>(context).otherselect();
-                          },
-                          child: GenderCont(
-                            gender: "Others",
-                            icon: FontAwesomeIcons.flag,
-                            color: Colors.black,
-                          ),
-                        ),
-                      )
-                    ],
-                  );
-                } else if (state is OtherSelect) {
-                  return Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Expanded(
-                        child: InkWell(
-                          onTap: () {
-                            BlocProvider.of<GenderCubit>(context).maleSelect();
-                          },
-                          child: GenderCont(
-                            gender: "Male",
-                            icon: FontAwesomeIcons.male,
-                            color: Colors.black,
-                          ),
-                        ),
-                      ),
-                      Expanded(
-                        child: InkWell(
-                          onTap: () {
-                            BlocProvider.of<GenderCubit>(context)
-                                .femaleSelect();
-                          },
-                          child: GenderCont(
-                            gender: "Female",
-                            icon: FontAwesomeIcons.female,
-                            color: Colors.black,
-                          ),
-                        ),
-                      ),
-                      Expanded(
-                        child: InkWell(
-                          onTap: () {
-                            BlocProvider.of<GenderCubit>(context).otherselect();
-                          },
-                          child: GenderCont(
-                            gender: "Others",
-                            icon: FontAwesomeIcons.flag,
-                            color: Colors.white,
-                          ),
-                        ),
-                      )
-                    ],
-                  );
-                } else
-                  return Container();
-              },
-            ),
-          )
-        ],
-      ),
-    );
-  }
-}
-
-class GenderCont extends StatelessWidget {
-  GenderCont({required this.gender, required this.icon, required this.color});
-  IconData icon;
-  String gender;
-  Color color;
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 10),
-      child: Container(
-        alignment: Alignment.center,
-        padding: EdgeInsets.all(4),
-        decoration: BoxDecoration(
-            color: color == Colors.black ? Colors.white : Colors.red[800],
-            border: Border.all(color: color),
-            borderRadius: BorderRadius.circular(50)),
-        child: Row(
-          children: [
-            Icon(
-              icon,
-              color: color,
-            ),
-            Text(
-              " " + gender,
-              style: GoogleFonts.montserrat(
-                  color: color, fontWeight: FontWeight.w400),
-            )
-          ],
         ),
       ),
     );

@@ -18,3 +18,7 @@ class Register2Done extends GoogleRegisterState{}
 class Register3Done extends GoogleRegisterState{}
 
 class Register4Done extends GoogleRegisterState{}
+
+class Register5Done extends GoogleRegisterState{}
+
+class Register6Done extends GoogleRegisterState{}

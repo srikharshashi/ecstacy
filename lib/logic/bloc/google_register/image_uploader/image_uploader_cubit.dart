@@ -8,13 +8,14 @@ import 'package:equatable/equatable.dart';
 part 'image_uploader_state.dart';
 
 class ImageUploaderCubit extends Cubit<ImageUploaderState> {
-  ImageUploaderCubit() : super(ImageUploaderInitial());
+  ImageUploaderCubit() : super(ImageUploaderInitial(enable: false));
 
   void uploadimage(File? image, String username) {
-    emit(ImageUploaderLoad());
     if (image != null) {
+      emit(ImageUploaderLoad(enable: false));
+
       FB_Storage().uploadFile(image, username).then((url) {
-        emit(ImageUploader1done(img1url: url));
+        emit(ImageUploader1done(img1url: url, enable: true));
         print("Uploaded");
       });
     }
