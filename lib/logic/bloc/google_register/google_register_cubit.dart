@@ -1,7 +1,6 @@
 import 'dart:math';
 
 import 'package:bloc/bloc.dart';
-import 'package:bloc_custom_firebase/logic/bloc/onboard/onboard_cubit.dart';
 import 'package:bloc_custom_firebase/services/fb_auth_service.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -32,7 +31,10 @@ class GoogleRegisterCubit extends Cubit<GoogleRegisterState> {
       emit(Register3Done());
     else if (num == 4)
       emit(Register4Done());
-    else if (num == 5) emit(Register5Done());
+    else if (num == 5) {
+      emit(Register5Done());
+      print("5 done in cubit");
+    } else if (num == 6) emit(Register6Done());
   }
 
   void reset() {

@@ -10,7 +10,7 @@ class ProgressBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     print(MediaQuery.of(context).size.height);
-      return Container(
+    return Container(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -25,37 +25,51 @@ class ProgressBar extends StatelessWidget {
               children: [
                 Expanded(
                   child: Container(
-                    color: page >= 1 ? Theme.of(context).primaryColor: Colors.white,
+                    color: page >= 1
+                        ? Theme.of(context).primaryColor
+                        : Colors.white,
                   ),
                 ),
                 Expanded(
                   child: Container(
-                    color: page >= 2 ? Theme.of(context).primaryColor : Colors.white,
+                    color: page >= 2
+                        ? Theme.of(context).primaryColor
+                        : Colors.white,
                   ),
                 ),
                 Expanded(
                   child: Container(
-                    color: page >= 3 ? Theme.of(context).primaryColor : Colors.white,
+                    color: page >= 3
+                        ? Theme.of(context).primaryColor
+                        : Colors.white,
                   ),
                 ),
                 Expanded(
                   child: Container(
-                    color: page >= 4 ? Theme.of(context).primaryColor : Colors.white,
+                    color: page >= 4
+                        ? Theme.of(context).primaryColor
+                        : Colors.white,
                   ),
                 ),
                 Expanded(
                   child: Container(
-                    color: page >= 5 ? Theme.of(context).primaryColor : Colors.white,
+                    color: page >= 5
+                        ? Theme.of(context).primaryColor
+                        : Colors.white,
                   ),
                 ),
                 Expanded(
                   child: Container(
-                    color: page >= 6 ?Theme.of(context).primaryColor : Colors.white,
+                    color: page >= 6
+                        ? Theme.of(context).primaryColor
+                        : Colors.white,
                   ),
                 ),
                 Expanded(
                   child: Container(
-                    color: page >= 7 ? Theme.of(context).primaryColor : Colors.white,
+                    color: page >= 7
+                        ? Theme.of(context).primaryColor
+                        : Colors.white,
                   ),
                 ),
               ],
@@ -356,8 +370,10 @@ class GenderCont extends StatelessWidget {
         alignment: Alignment.center,
         padding: EdgeInsets.all(4),
         decoration: BoxDecoration(
-            color: color == Colors.black ? Colors.white : Colors.red[800],
-            border: Border.all(color: color),
+            color: color == Colors.black
+                ? Colors.white
+                : Theme.of(context).primaryColor,
+            border: Border.all(color: Theme.of(context).primaryColor),
             borderRadius: BorderRadius.circular(50)),
         child: Row(
           children: [

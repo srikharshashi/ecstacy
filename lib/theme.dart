@@ -11,7 +11,7 @@ class AppTheme {
     textTheme: TextTheme(
       headline1: GoogleFonts.pacifico(
           fontSize: 35, fontWeight: FontWeight.w300, color: Colors.black),
-          headline2: GoogleFonts.pacifico(
+      headline2: GoogleFonts.pacifico(
           fontSize: 23, fontWeight: FontWeight.w300, color: Colors.black),
       bodyText2: TextStyle(color: Colors.black),
     ),
@@ -27,16 +27,15 @@ class AppTheme {
 
   static final ThemeData darkTheme = ThemeData(
     brightness: Brightness.dark,
-    primaryColor: Colors.red,
+    primaryColor: Colors.purple[900],
     backgroundColor: Color(0xFF121212),
     canvasColor: Color(0xFF121212),
     iconTheme: IconThemeData(color: Colors.white),
     textTheme: TextTheme(
       headline1: GoogleFonts.pacifico(
           fontSize: 35, fontWeight: FontWeight.w300, color: Colors.white),
-          headline2: GoogleFonts.pacifico(
+      headline2: GoogleFonts.pacifico(
           fontSize: 23, fontWeight: FontWeight.w300, color: Colors.white),
-      
     ),
     appBarTheme: AppBarTheme(
       foregroundColor: Colors.white,

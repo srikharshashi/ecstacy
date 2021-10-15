@@ -16,14 +16,17 @@ dependencies:
   firebase_storage: ^10.0.3
   flutter:
     sdk: flutter
-  flutter_bloc: ^7.1.0
+  flutter_bloc: ^7.3.0
   flutter_spinkit: ^5.0.0
   flutter_svg: ^0.22.0
   font_awesome_flutter: ^9.1.0
+  geocoding: ^2.0.1
+  geolocator: ^7.7.0
   google_fonts: ^2.1.0
   google_sign_in: ^5.1.0
   image_cropper: ^1.4.1
   image_picker: ^0.8.4
+  shared_preferences: ^2.0.8
 dev_dependencies:
   flutter_test:
     sdk: flutter

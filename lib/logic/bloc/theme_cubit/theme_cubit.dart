@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 part 'theme_state.dart';
 
 class ThemeCubit extends Cubit<ThemeState> {
-  ThemeCubit() : super(LightTheme(themeData: AppTheme.darkTheme));
+  ThemeCubit() : super(DarkTheme(themeData: AppTheme.darkTheme));
 
   void changetheme(ThemeData theme) {
     if (state is LightTheme)
