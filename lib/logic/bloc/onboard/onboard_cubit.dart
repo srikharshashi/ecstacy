@@ -1,9 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:bloc_custom_firebase/services/fb_auth_service.dart';
 import 'package:bloc_custom_firebase/services/fb_db.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 part 'onboard_state.dart';
 
 class OnboardCubit extends Cubit<OnboardState> {
@@ -33,4 +31,6 @@ class OnboardCubit extends Cubit<OnboardState> {
     print("In reload");
     emit(OnboardInitial());
   }
+
+ 
 }

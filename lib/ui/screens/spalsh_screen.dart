@@ -36,7 +36,7 @@ class SplashScreen extends StatelessWidget {
                   BlocBuilder<SplashscreenCubit, SplashscreenState>(
                       builder: (context, state) {
                     if (state is SplashscreenLoading)
-                      return SpinKitCubeGrid(
+                      return SpinKitDoubleBounce(
                           color: Theme.of(context).primaryColor);
                     else if (state is ConnectivityError)
                       return Column(

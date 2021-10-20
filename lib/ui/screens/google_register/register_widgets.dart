@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:bloc_custom_firebase/logic/bloc/google_register/image_uploader/image_uploader_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -145,47 +144,41 @@ class ImageUploadFinal extends StatelessWidget {
             flex: 3,
             child: Container(
                 alignment: Alignment.center,
-                // decoration: BoxDecoration(
-                //     border: Border.all(
-                //         color: Colors.black)),
+                // decoration:
+                //     BoxDecoration(border: Border.all(color: Colors.black)),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     Container(
-                      decoration: BoxDecoration(
-                        boxShadow: [
-                          BoxShadow(
-                            color: Theme.of(context).canvasColor == Colors.white
-                                ? Colors.grey.withOpacity(0.5)
-                                : Color(0xFF1a1c1b).withOpacity(0.2),
-                            blurRadius: 20.0, // soften the shadow
-                            spreadRadius: 0.2, //extend the shadow
-                            offset: Offset(
-                              2.0, // Move to right 10  horizontally
-                              2.0, // Move to bottom 10 Vertically
+                        decoration: BoxDecoration(
+                          boxShadow: [
+                            BoxShadow(
+                              color:
+                                  Theme.of(context).canvasColor == Colors.white
+                                      ? Colors.grey.withOpacity(0.5)
+                                      : Color(0xFF1a1c1b).withOpacity(0.2),
+                              blurRadius: 20.0, // soften the shadow
+                              spreadRadius: 0.2, //extend the shadow
+                              offset: Offset(
+                                2.0, // Move to right 10  horizontally
+                                2.0, // Move to bottom 10 Vertically
+                              ),
                             ),
-                          ),
-                        ],
-                        // border: Border.all(
-                        //     color:
-                        //         Colors.red)),
-                      ),
-                      child: ClipOval(
-                        child: Container(
-                          width: 100,
-                          alignment: Alignment.center,
-                          decoration: BoxDecoration(
-                            image: DecorationImage(
-                              fit: BoxFit.fill,
-                              image: NetworkImage(url),
-                            ),
-                          ),
+                          ],
+                          // border: Border.all(
+                          //     color:
+                          //         Colors.red)),
                         ),
-                      ),
-                    ),
+                        child: CircleAvatar(
+                          radius: 50,
+                          backgroundImage: NetworkImage(
+                            url,
+                          ),
+                        )),
                   ],
                 )),
           ),
+          // Text("70% of users whp got matched were verifed")
         ],
       ),
     );

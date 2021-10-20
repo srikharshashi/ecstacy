@@ -1,6 +1,7 @@
 import 'package:bloc_custom_firebase/logic/bloc/gender_cubit/gender_cubit.dart';
 import 'package:bloc_custom_firebase/logic/bloc/location_cubit/location_cubit.dart';
 import 'package:bloc_custom_firebase/logic/bloc/logout/logout_cubit.dart';
+import 'package:bloc_custom_firebase/logic/bloc/number_cubit/numbercubit.dart';
 import 'package:bloc_custom_firebase/logic/bloc/onboard/onboard_cubit.dart';
 import 'package:bloc_custom_firebase/logic/bloc/splash/splashscreen_cubit.dart';
 import 'package:bloc_custom_firebase/logic/bloc/theme_cubit/theme_cubit.dart';
@@ -19,6 +20,7 @@ void main() {
 
 class MyApp extends StatelessWidget {
   final AppRouter appRouter = AppRouter();
+
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
@@ -37,7 +39,10 @@ class MyApp extends StatelessWidget {
         BlocProvider(
           create: (context) => ThemeCubit(),
         ),
-        BlocProvider(create: (context) => LocationCubit(locationService: LocationService())),
+        BlocProvider(
+            create: (context) =>
+                LocationCubit(locationService: LocationService())),
+        BlocProvider(create: (context) => NumberRegistercubit(fb_service: FB_Service())),
       ],
       child:
           BlocBuilder<ThemeCubit, ThemeState>(builder: (context, themestate) {

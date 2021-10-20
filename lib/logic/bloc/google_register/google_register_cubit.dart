@@ -1,4 +1,4 @@
-import 'dart:math';
+
 
 import 'package:bloc/bloc.dart';
 import 'package:bloc_custom_firebase/services/fb_auth_service.dart';
@@ -24,16 +24,15 @@ class GoogleRegisterCubit extends Cubit<GoogleRegisterState> {
 
   void update_page(int num) {
     if (num == 1)
-      emit(Register1Done());
+      emit(NumberRegister());
     else if (num == 2)
-      emit(Register2Done());
+      emit(GenderRegister());
     else if (num == 3)
-      emit(Register3Done());
+      emit(BioRegister());
     else if (num == 4)
-      emit(Register4Done());
+      emit(ImageRegister());
     else if (num == 5) {
-      emit(Register5Done());
-      print("5 done in cubit");
+      emit(LocationRegister());
     } else if (num == 6) emit(Register6Done());
   }
 

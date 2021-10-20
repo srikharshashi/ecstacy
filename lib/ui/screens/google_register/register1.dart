@@ -1,16 +1,18 @@
 import 'package:bloc_custom_firebase/logic/bloc/gender_cubit/gender_cubit.dart';
+import 'package:bloc_custom_firebase/logic/bloc/google_register/google_register_cubit.dart';
 import 'package:bloc_custom_firebase/logic/bloc/google_register/image_uploader/image_uploader_cubit.dart';
 import 'package:bloc_custom_firebase/logic/bloc/location_cubit/location_cubit.dart';
+import 'package:bloc_custom_firebase/logic/bloc/number_cubit/numbercubit.dart';
 import 'package:bloc_custom_firebase/logic/bloc/theme_cubit/theme_cubit.dart';
-import 'package:bloc_custom_firebase/ui/screens/google_register/register_windgets.dart';
+import 'package:bloc_custom_firebase/ui/screens/google_register/register_widgets.dart';
 import "package:flutter/material.dart";
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:bloc_custom_firebase/constants.dart';
-import 'package:bloc_custom_firebase/logic/bloc/google_register/google_register_cubit.dart';
 import 'package:bloc_custom_firebase/ui/screens/google_register/widgets.dart';
+import 'package:pin_code_fields/pin_code_fields.dart';
 
 class Reg1 extends StatefulWidget {
   @override
@@ -47,8 +49,10 @@ class _Reg1State extends State<Reg1> with WidgetsBindingObserver {
         appLifecycleState == AppLifecycleState.inactive) {
       if (BlocProvider.of<GoogleRegisterCubit>(context).page != 5) {
         if (BlocProvider.of<GoogleRegisterCubit>(context).page != 6) {
-          BlocProvider.of<GoogleRegisterCubit>(context).reset();
-          BlocProvider.of<GoogleRegisterCubit>(context).logout();
+          if (BlocProvider.of<GoogleRegisterCubit>(context).page != 0) {
+            BlocProvider.of<GoogleRegisterCubit>(context).reset();
+            BlocProvider.of<GoogleRegisterCubit>(context).logout();
+          }
         }
       }
     }
@@ -61,6 +65,7 @@ class _Reg1State extends State<Reg1> with WidgetsBindingObserver {
   TextEditingController gender_controller = TextEditingController(); //done
   //get email rom firebase user
   TextEditingController photourl_controller = TextEditingController();
+  TextEditingController otpcontroller = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -88,7 +93,7 @@ class _Reg1State extends State<Reg1> with WidgetsBindingObserver {
                 BlocProvider.of<GoogleRegisterCubit>(context).page = 1;
                 BlocProvider.of<GoogleRegisterCubit>(context).update_page(1);
                 Navigator.pushReplacementNamed(context, FRONT_PAGE);
-              } else if (register_state is Register5Done) {
+              } else if (register_state is LocationRegister) {
                 BlocProvider.of<LocationCubit>(context).get_location();
               }
             },
@@ -108,6 +113,7 @@ class _Reg1State extends State<Reg1> with WidgetsBindingObserver {
                   onPressed: () {
                     BlocProvider.of<GoogleRegisterCubit>(context).logout();
                     BlocProvider.of<GenderCubit>(context).reset();
+                    context.read<NumberRegistercubit>().reload();
                   },
                   icon: Icon(
                     FontAwesomeIcons.powerOff,
@@ -165,10 +171,10 @@ class _Reg1State extends State<Reg1> with WidgetsBindingObserver {
                           return NameField(
                             namecontroller: name_controller,
                           );
-                        else if (state is Register1Done) {
+                        else if (state is NumberRegister) {
                           return NumberField(
                               numbercontroller: number_controller);
-                        } else if (state is Register2Done) {
+                        } else if (state is GenderRegister) {
                           return BlocListener<GenderCubit, GenderState>(
                             listener: (context, state) {
                               if (state is MaleSelect) {
@@ -183,9 +189,9 @@ class _Reg1State extends State<Reg1> with WidgetsBindingObserver {
                             },
                             child: GenderSelect(),
                           );
-                        } else if (state is Register3Done) {
+                        } else if (state is BioRegister) {
                           return Register3done(bio_controller: bio_controller);
-                        } else if (state is Register4Done) {
+                        } else if (state is ImageRegister) {
                           return BlocBuilder<ImageUploaderCubit,
                               ImageUploaderState>(
                             builder: (context, state) {
@@ -216,7 +222,7 @@ class _Reg1State extends State<Reg1> with WidgetsBindingObserver {
                                 return Container();
                             },
                           );
-                        } else if (state is Register5Done) {
+                        } else if (state is LocationRegister) {
                           return BlocBuilder<LocationCubit, LocationState>(
                             builder: (context, state) {
                               print("abc");
@@ -324,12 +330,10 @@ class _Reg1State extends State<Reg1> with WidgetsBindingObserver {
                             if (number_controller.text != "" &&
                                 number_controller.text.length == 10) {
                               update();
-                            } else {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(
-                                      content: Text(
-                                          "Please Provide proper number!")));
-                            }
+                            } else
+                              ScaffoldMessenger(
+                                  child: SnackBar(
+                                      content: Text("Enter a Valid Number")));
                           } else if (num == 3) {
                             print("Page 3");
                             if (gender_enable) {
@@ -359,6 +363,8 @@ class _Reg1State extends State<Reg1> with WidgetsBindingObserver {
                           } else if (num == 6) {
                             if (location_enable) {
                               update();
+                              Navigator.pushReplacementNamed(
+                                  context, HOME_ROUTE);
                             } else {
                               ScaffoldMessenger.of(context).showSnackBar(
                                   SnackBar(

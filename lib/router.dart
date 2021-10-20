@@ -1,7 +1,8 @@
 import 'package:bloc_custom_firebase/constants.dart';
-import 'package:bloc_custom_firebase/ui/screens/HomePage.dart';
+import 'package:bloc_custom_firebase/ui/screens/home/HomePage.dart';
 import 'package:bloc_custom_firebase/ui/screens/google_register/register1.dart';
 import 'package:bloc_custom_firebase/ui/screens/front_page.dart';
+import 'package:bloc_custom_firebase/ui/screens/phone_register/pregister1.dart';
 import 'package:bloc_custom_firebase/ui/screens/spalsh_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -16,6 +17,8 @@ class AppRouter {
         return MaterialPageRoute(builder: (context) => Home());
       case REGISTER_PAGE1:
         return MaterialPageRoute(builder: (context) => Reg1());
+      case PHONE_REGISTER:
+        return MaterialPageRoute(builder: (context) => PRegister());
       default:
         return null;
     }

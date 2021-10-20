@@ -4,11 +4,12 @@ import 'package:bloc_custom_firebase/logic/bloc/theme_cubit/theme_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class FrontPage extends StatefulWidget {
+  const FrontPage({Key? key}) : super(key: key);
+
   @override
   _FrontPageState createState() => _FrontPageState();
 }
@@ -16,132 +17,121 @@ class FrontPage extends StatefulWidget {
 class _FrontPageState extends State<FrontPage> {
   @override
   void initState() {
-    super.initState();
     BlocProvider.of<OnboardCubit>(context).reload();
+    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    var height = MediaQuery.of(context).size.height;
+    var width = MediaQuery.of(context).size.width;
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           BlocProvider.of<ThemeCubit>(context).changetheme(Theme.of(context));
         },
       ),
+      appBar: AppBar(
+        centerTitle: true,
+        title: Text("Ecstacy"),
+      ),
       body: Padding(
-        padding: EdgeInsets.all(30),
-        child: Center(
-          child: ListView(
-            children: [
-              SizedBox(
-                height: 30,
-              ),
-              Center(
-                  child: Text(
-                "Ecstacy",
-                style: Theme.of(context).textTheme.headline1,
-              )),
-              SizedBox(
-                height: 50,
-              ),
-              Center(
-                child: Container(
-                  // alignment: Alignment.center,
-                  child: SvgPicture.asset(
-                    "lib/assets/svg/img1.svg",
-                    semanticsLabel: "abc",
-                    height: 300,
-                    width: 60,
-                  ),
+        padding: const EdgeInsets.all(10.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            Container(
+              padding: EdgeInsets.all(50),
+              height: height / 2.0,
+              // decoration:
+              //     BoxDecoration(border: Border.all(color: Colors.white)),
+              child: SvgPicture.asset("lib/assets/svg/img1.svg"),
+            ),
+            Container(
+              height: height / 8,
+              width: double.infinity,
+              // decoration:
+              //     BoxDecoration(border: Border.all(color: Colors.white)),
+              child: Center(
+                child: Text(
+                  "Hello !!",
+                  style: Theme.of(context).textTheme.subtitle1,
                 ),
               ),
-              SizedBox(
-                height: 50,
-              ),
-              Center(
-                  child: Text(
-                "Hello!",
-                style: GoogleFonts.montserrat(
-                    fontSize: 23, fontWeight: FontWeight.bold),
-              )),
-              Center(
-                child: Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 30, vertical: 40),
-                  child: Container(
-                    height: 130,
-                    // decoration: BoxDecoration(
-                    //   border: Border.all(
-                    //     color: Colors.black,
-                    //   ),
-                    // ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(25.0),
-                      child: BlocConsumer<OnboardCubit, OnboardState>(
-                        listener: (context, state) {
-                          if (state is OnboardHome)
-                            Navigator.pushReplacementNamed(context, HOME_ROUTE);
-                          else if (state is OnboardRegister)
-                            Navigator.pushReplacementNamed(
-                                context, REGISTER_PAGE1);
-                        },
-                        builder: (context, state) {
-                          if (state is OnboardInitial)
-                            return Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              children: [
-                                InkWell(
-                                  onTap: () {
-                                    BlocProvider.of<OnboardCubit>(context)
-                                        .signinwithgoogle();
-                                  },
-                                  child: Container(
-                                    height: 70,
-                                    width: 70,
-                                    decoration: BoxDecoration(
-                                        shape: BoxShape.circle,
-                                        border: Border.all(
-                                            color:
-                                                Theme.of(context).primaryColor,
-                                            width: 2.5)),
-                                    child: Icon(
-                                      FontAwesomeIcons.google,
-                                      color: Theme.of(context).iconTheme.color,
-                                    ),
-                                  ),
-                                ),
-                                InkWell(
-                                  onTap: () {
-                                    print("CDF");
-                                  },
-                                  child: Container(
-                                    height: 70,
-                                    width: 70,
-                                    decoration: BoxDecoration(
-                                        shape: BoxShape.circle,
-                                        border: Border.all(
-                                            color:
-                                                Theme.of(context).primaryColor,
-                                            width: 2.5)),
-                                    child: Icon(FontAwesomeIcons.phoneAlt),
-                                  ),
-                                )
-                              ],
-                            );
-                          else if (state is OnboardLoad) {
-                            return SpinKitCubeGrid(
-                              color: Theme.of(context).primaryColor,
-                            );
-                          } else
-                            return Container();
-                        },
-                      ),
-                    ),
-                  ),
+            ),
+            Container(
+              height: height / 6,
+              // decoration:
+              //     BoxDecoration(border: Border.all(color: Colors.white)),
+              child: Center(
+                child: BlocConsumer<OnboardCubit, OnboardState>(
+                  builder: (context, state) {
+                    if (state is OnboardInitial) {
+                      return Container(
+                        decoration: BoxDecoration(
+                            // border: Border.all(color: Colors.white),
+                            ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            InkWell(
+                              onTap: () {
+                                BlocProvider.of<OnboardCubit>(context)
+                                    .signinwithgoogle();
+                              },
+                              child: Container(
+                                height: 70,
+                                width: 70,
+                                decoration: BoxDecoration(
+                                    border: Border.all(
+                                        color: Theme.of(context).primaryColor,
+                                        width: 2.5),
+                                    shape: BoxShape.circle),
+                                child: Icon(FontAwesomeIcons.google),
+                              ),
+                            ),
+                            SizedBox(
+                              width: 20,
+                            ),
+                            InkWell(
+                              onTap: () {
+                                print("CLicked on Phone");
+                              },
+                              child: Container(
+                                height: 70,
+                                width: 70,
+                                decoration: BoxDecoration(
+                                    border: Border.all(
+                                        color: Theme.of(context).primaryColor,
+                                        width: 2.5),
+                                    shape: BoxShape.circle),
+                                child: Icon(FontAwesomeIcons.phoneAlt),
+                              ),
+                            )
+                          ],
+                        ),
+                      );
+                    } else if (state is OnboardLoad) {
+                      return SpinKitDoubleBounce(
+                        color: Theme.of(context).primaryColor,
+                      );
+                    } else if (state is OnboardError) {
+                      return Container(
+                        child: Text("There was an error"),
+                      );
+                    } else
+                      return Container();
+                  },
+                  listener: (context, state) {
+                    if (state is OnboardHome)
+                      Navigator.pushReplacementNamed(context, HOME_ROUTE);
+                    else if (state is OnboardRegister)
+                      Navigator.pushReplacementNamed(context, REGISTER_PAGE1);
+                  },
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
