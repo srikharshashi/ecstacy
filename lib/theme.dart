@@ -9,7 +9,7 @@ class AppTheme {
     canvasColor: Colors.white,
     iconTheme: IconThemeData(color: Colors.black),
     textTheme: TextTheme(
-      subtitle1: GoogleFonts.montserrat(
+      subtitle2: GoogleFonts.montserrat(
           fontSize: 25, fontWeight: FontWeight.w600, color: Colors.black),
       headline1: GoogleFonts.pacifico(
           fontSize: 35, fontWeight: FontWeight.w300, color: Colors.black),
@@ -38,7 +38,7 @@ class AppTheme {
           fontSize: 35, fontWeight: FontWeight.w300, color: Colors.white),
       headline2: GoogleFonts.pacifico(
           fontSize: 23, fontWeight: FontWeight.w300, color: Colors.white),
-      subtitle1: GoogleFonts.montserrat(
+      subtitle2: GoogleFonts.montserrat(
           fontSize: 25, fontWeight: FontWeight.w600, color: Colors.white),
     ),
     tabBarTheme: TabBarTheme(),

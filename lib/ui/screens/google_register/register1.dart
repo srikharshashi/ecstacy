@@ -81,9 +81,10 @@ class _Reg1State extends State<Reg1> with WidgetsBindingObserver {
             listener: (context, state) {
               if (state is ImageUploader1done) {
                 print("In bloc listner photo uploaded");
-                photourl_controller.text =
-                    (state as ImageUploader1done).img1url;
-                photo_enable = ((state as ImageUploader1done)).enable;
+                photourl_controller.text = (state).img1url;
+                photo_enable = ((state)).enable;
+              } else {
+                photo_enable = false;
               }
             },
           ),
@@ -198,13 +199,95 @@ class _Reg1State extends State<Reg1> with WidgetsBindingObserver {
                               if (state is ImageUploaderInitial) {
                                 return ImageUploadinitial(
                                     name_controller: name_controller);
-                              } else if (state is ImageUploaderLoad) {
+                              } else if (state is ImageVerifiyLoad) {
                                 return Column(
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceAround,
                                   children: [
                                     Text(
-                                      "Please wait till we upload it",
+                                      "Please wait till we Verify it",
+                                      style: GoogleFonts.montserrat(
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.w600),
+                                    ),
+                                    Container(
+                                      child: SpinKitDoubleBounce(
+                                          color:
+                                              Theme.of(context).primaryColor),
+                                    ),
+                                  ],
+                                );
+                              } else if (state is ImageVErifyFail) {
+                                return Column(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceAround,
+                                  children: [
+                                    Text(
+                                      "We have failed to verify if as there were no faces found",
+                                      style: GoogleFonts.montserrat(
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.w600),
+                                    ),
+                                    ElevatedButton(
+                                        style: ButtonStyle(
+                                          backgroundColor:
+                                              MaterialStateProperty.all(
+                                                  Theme.of(context)
+                                                      .primaryColor),
+                                        ),
+                                        onPressed: () {
+                                          context
+                                              .read<ImageUploaderCubit>()
+                                              .reset();
+                                        },
+                                        child: Text("Retry"))
+                                  ],
+                                );
+                              } else if (state is ImageVerifyMultiplefaces) {
+                                return Column(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceAround,
+                                  children: [
+                                    Text(
+                                      "There were mutliple faces found ",
+                                      style: GoogleFonts.montserrat(
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.w600),
+                                    ),
+                                    Text(
+                                      "please try again",
+                                      style: GoogleFonts.montserrat(
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.w600),
+                                    ),
+                                    ElevatedButton(
+                                        style: ButtonStyle(
+                                          backgroundColor:
+                                              MaterialStateProperty.all(
+                                                  Theme.of(context)
+                                                      .primaryColor),
+                                        ),
+                                        onPressed: () {
+                                          context
+                                              .read<ImageUploaderCubit>()
+                                              .reset();
+                                        },
+                                        child: Text("Retry"))
+                                  ],
+                                );
+                              } else if (state is ImageVerifyPass) {
+                                return Column(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceAround,
+                                  children: [
+                                    Text(
+                                      "Please wait till we Upload it ",
+                                      style: GoogleFonts.montserrat(
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.w600),
+                                    ),
+                                    Text(
+                                      "Found 1 Face",
                                       style: GoogleFonts.montserrat(
                                           fontSize: 18,
                                           fontWeight: FontWeight.w600),

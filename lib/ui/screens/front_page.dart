@@ -45,7 +45,7 @@ class _FrontPageState extends State<FrontPage> {
               height: height / 2.0,
               // decoration:
               //     BoxDecoration(border: Border.all(color: Colors.white)),
-              child: SvgPicture.asset("lib/assets/svg/img1.svg"),
+              child: SvgPicture.asset("lib/assets/svg/img2.svg"),
             ),
             Container(
               height: height / 8,
@@ -55,7 +55,7 @@ class _FrontPageState extends State<FrontPage> {
               child: Center(
                 child: Text(
                   "Hello !!",
-                  style: Theme.of(context).textTheme.subtitle1,
+                  style: Theme.of(context).textTheme.subtitle2,
                 ),
               ),
             ),

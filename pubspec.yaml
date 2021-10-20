@@ -24,6 +24,7 @@ dependencies:
   geolocator: ^7.7.0
   google_fonts: ^2.1.0
   google_sign_in: ^5.1.0
+  google_ml_kit: ^0.7.2
   image_cropper: ^1.4.1
   image_picker: ^0.8.4
   pin_code_fields: ^7.3.0
@@ -35,3 +36,5 @@ flutter:
   uses-material-design: true
   assets:
     - lib/assets/svg/img1.svg
+    - lib/assets/svg/img2.svg
+

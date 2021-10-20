@@ -1,26 +1,19 @@
 part of 'image_uploader_cubit.dart';
 
-abstract class ImageUploaderState {
-  bool enable;
-  ImageUploaderState({
-    required this.enable,
-  });
-}
+abstract class ImageUploaderState {}
 
-class ImageUploaderInitial extends ImageUploaderState {
-  bool enable;
+class ImageUploaderInitial extends ImageUploaderState {} //done
 
-  ImageUploaderInitial({required this.enable}) : super(enable: enable);
-}
+class ImageVerifiyLoad extends ImageUploaderState {}//done
 
-class ImageUploaderLoad extends ImageUploaderState {
-  bool enable;
-  ImageUploaderLoad({required this.enable}) : super(enable: enable);
-}
+class ImageVErifyFail extends ImageUploaderState {}
 
-class ImageUploader1done extends ImageUploaderState {
+class ImageVerifyMultiplefaces extends ImageUploaderState {} //done
+
+class ImageVerifyPass extends ImageUploaderState {}//done
+
+class ImageUploader1done extends ImageUploaderState { 
   String img1url;
   bool enable;
-  ImageUploader1done({required this.img1url, required this.enable})
-      : super(enable: enable);
+  ImageUploader1done({required this.img1url, required this.enable});
 }
