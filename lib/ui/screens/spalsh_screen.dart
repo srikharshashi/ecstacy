@@ -1,4 +1,5 @@
 import 'package:bloc_custom_firebase/constants.dart';
+import 'package:bloc_custom_firebase/logic/bloc/auth_status/authstatus_cubit.dart';
 import 'package:bloc_custom_firebase/logic/bloc/splash/splashscreen_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -10,9 +11,10 @@ class SplashScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocListener<SplashscreenCubit, SplashscreenState>(
       listener: (context, state) {
-        if (state is Loggedin)
+        if (state is Loggedin) {
+          context.read<AuthstatusCubit>().autheticateuser(state.user);
           Navigator.pushReplacementNamed(context, HOME_ROUTE);
-        else if (state is UnAuthenticated)
+        } else if (state is UnAuthenticated)
           Navigator.pushReplacementNamed(context, FRONT_PAGE);
       },
       child: SafeArea(

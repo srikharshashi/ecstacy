@@ -12,8 +12,10 @@ class LocationError extends LocationState {
 
 class LocationSucess extends LocationState {
   String location;
+  Position position;
   LocationSucess({
     required this.location,
+    required this.position
   });
   //Got the location
 }

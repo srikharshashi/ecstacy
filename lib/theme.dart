@@ -43,7 +43,7 @@ class AppTheme {
     ),
     tabBarTheme: TabBarTheme(),
     appBarTheme: AppBarTheme(
-      foregroundColor: Colors.white,
+      foregroundColor: Colors.black,
       actionsIconTheme: IconThemeData(color: Colors.white),
       backgroundColor: Colors.transparent,
       elevation: 0,

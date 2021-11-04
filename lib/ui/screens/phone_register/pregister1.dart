@@ -18,7 +18,7 @@ class _PRegisterState extends State<PRegister> {
     return Scaffold(
         floatingActionButton: FloatingActionButton(
           onPressed: () {
-            BlocProvider.of<ThemeCubit>(context).changetheme(Theme.of(context));
+            BlocProvider.of<ThemeCubit>(context).changetheme();
           },
         ),
         resizeToAvoidBottomInset: false,

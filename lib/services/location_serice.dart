@@ -8,6 +8,13 @@ class LocationService {
 
     List<Placemark> placemarks =
         await placemarkFromCoordinates(position.latitude, position.longitude);
+    print(placemarks);
     return placemarks;
+  }
+
+  Future<Position> getlatloc() async {
+    Position position = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.high);
+    return position;
   }
 }

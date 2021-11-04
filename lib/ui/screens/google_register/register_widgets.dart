@@ -25,7 +25,7 @@ class _Register3doneState extends State<Register3done> {
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 8.0),
             child: Text(
-              "Tell us something about youself! (Bio)",
+              "tell us something about youself!   (bio)",
               style: GoogleFonts.montserrat(
                   fontSize: 18, fontWeight: FontWeight.w600),
             ),
@@ -165,9 +165,7 @@ class ImageUploadFinal extends StatelessWidget {
                               ),
                             ),
                           ],
-                          // border: Border.all(
-                          //     color:
-                          //         Colors.red)),
+                         
                         ),
                         child: CircleAvatar(
                           radius: 50,

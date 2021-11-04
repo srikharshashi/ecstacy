@@ -111,15 +111,15 @@ class FB_Service {
     }
   }
 
-  String? get_user_email() {
+  String get_user_email() {
     var user = FirebaseAuth.instance.currentUser;
     if (user != null) {
-      return user.email;
+      return user.email ?? "";
     } else
       return "";
   }
 
-   late String verifid;
+  late String verifid;
 
   Future<bool> phoneSignIn({
     required String phoneNumber,
@@ -159,8 +159,4 @@ class FB_Service {
     }
     return signin;
   }
-
- 
-
-  
 }

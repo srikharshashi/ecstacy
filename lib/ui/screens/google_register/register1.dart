@@ -1,3 +1,4 @@
+import 'package:bloc_custom_firebase/logic/bloc/auth_status/authstatus_cubit.dart';
 import 'package:bloc_custom_firebase/logic/bloc/gender_cubit/gender_cubit.dart';
 import 'package:bloc_custom_firebase/logic/bloc/google_register/google_register_cubit.dart';
 import 'package:bloc_custom_firebase/logic/bloc/google_register/image_uploader/image_uploader_cubit.dart';
@@ -9,6 +10,7 @@ import "package:flutter/material.dart";
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:bloc_custom_firebase/constants.dart';
 import 'package:bloc_custom_firebase/ui/screens/google_register/widgets.dart';
@@ -67,12 +69,16 @@ class _Reg1State extends State<Reg1> with WidgetsBindingObserver {
   TextEditingController photourl_controller = TextEditingController();
   TextEditingController otpcontroller = TextEditingController();
 
+  //get invite
+  TextEditingController invite_controller_out = TextEditingController();
+  bool gender_enable = false;
+  bool photo_enable = false;
+  bool location_enable = false;
+  bool invite_enable = false;
+  late Position position;
+
   @override
   Widget build(BuildContext context) {
-    bool gender_enable = false;
-    bool photo_enable = false;
-    bool location_enable = false;
-
     return BlocProvider(
       create: (context) => ImageUploaderCubit(),
       child: MultiBlocListener(
@@ -96,15 +102,31 @@ class _Reg1State extends State<Reg1> with WidgetsBindingObserver {
                 Navigator.pushReplacementNamed(context, FRONT_PAGE);
               } else if (register_state is LocationRegister) {
                 BlocProvider.of<LocationCubit>(context).get_location();
+              } else if (register_state is Invitevalid) {
+                invite_enable = true;
+              } else if (register_state is GetInvite) {
+                invite_controller_out = (register_state).invite_contoller;
+              } else {
+                gender_enable = false;
+                photo_enable = false;
+                location_enable = false;
+                invite_enable = false;
               }
             },
           ),
+          BlocListener<LocationCubit, LocationState>(
+            listener: (context, state) {
+              if (state is LocationSucess) {
+                position = state.position;
+              }
+            },
+            child: Container(),
+          )
         ],
         child: Scaffold(
           floatingActionButton: FloatingActionButton(
             onPressed: () {
-              BlocProvider.of<ThemeCubit>(context)
-                  .changetheme(Theme.of(context));
+              BlocProvider.of<ThemeCubit>(context).changetheme();
             },
           ),
           resizeToAvoidBottomInset: false,
@@ -127,7 +149,6 @@ class _Reg1State extends State<Reg1> with WidgetsBindingObserver {
             centerTitle: true,
             title: Text(
               "Ecstacy",
-              style: Theme.of(context).textTheme.headline1,
             ),
           ),
           body: Padding(
@@ -148,7 +169,7 @@ class _Reg1State extends State<Reg1> with WidgetsBindingObserver {
                           // border: Border.all(color: Colors.black),
                           ),
                       child: Text(
-                        "Get Onboard with us!",
+                        "get onboard with us!",
                         style: GoogleFonts.montserrat(
                           fontSize: 20,
                           fontWeight: FontWeight.w600,
@@ -362,9 +383,131 @@ class _Reg1State extends State<Reg1> with WidgetsBindingObserver {
                             },
                           );
                         } //register 5 done
-                        else if (state is Register6Done) {
+                        else if (state is GetInvite) {
                           return Container(
-                            child: Text("In register 7"),
+                              child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              Text(
+                                "enter your invite code",
+                                style: GoogleFonts.montserrat(
+                                    fontSize: 18, fontWeight: FontWeight.w600),
+                              ),
+                              Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 20),
+                                child: PinCodeTextField(
+                                  appContext: context,
+                                  length: 5,
+                                  controller: state.invite_contoller,
+                                  onChanged: (abc) {},
+                                  pinTheme: PinTheme(
+                                      shape: PinCodeFieldShape.box,
+                                      borderRadius: BorderRadius.circular(10),
+                                      activeColor: Colors
+                                          .grey, //This is the filled bordere color,
+                                      activeFillColor: Colors.grey[600],
+                                      selectedColor: Colors.grey[700],
+                                      selectedFillColor: Colors.grey[700],
+                                      inactiveColor: Colors.grey[600],
+                                      inactiveFillColor: Colors.grey[600]),
+                                ),
+                              )
+                            ],
+                          ));
+                        } else if (state is GetInviteLoad) {
+                          return Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              Text(
+                                "let us verify it asap",
+                                style: GoogleFonts.montserrat(
+                                    fontSize: 18, fontWeight: FontWeight.w600),
+                              ),
+                              Container(
+                                child: SpinKitDoubleBounce(
+                                    color: Theme.of(context).primaryColor),
+                              ),
+                            ],
+                          );
+                        } else if (state is Inviteinvalid) {
+                          return Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              Text(
+                                "your invite is invalid",
+                                style: GoogleFonts.montserrat(
+                                    fontSize: 18, fontWeight: FontWeight.w600),
+                              ),
+                              ElevatedButton(
+                                onPressed: () {
+                                  context
+                                      .read<GoogleRegisterCubit>()
+                                      .invitereload();
+                                },
+                                child: Text("Try Again"),
+                                style: ButtonStyle(
+                                  backgroundColor: MaterialStateProperty.all(
+                                      Theme.of(context).primaryColor),
+                                ),
+                              )
+                            ],
+                          );
+                        } else if (state is Invitevalid) {
+                          return Text(
+                            "your invite was validated ✔️✔️",
+                            style: GoogleFonts.montserrat(
+                                fontSize: 18, fontWeight: FontWeight.w600),
+                          );
+                        } else if (state is RegisteringUser) {
+                          return Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              Text(
+                                "registering you on our servers",
+                                style: GoogleFonts.montserrat(
+                                    fontSize: 18, fontWeight: FontWeight.w600),
+                              ),
+                              Container(
+                                child: SpinKitDoubleBounce(
+                                    color: Theme.of(context).primaryColor),
+                              ),
+                            ],
+                          );
+                        } else if (state is UserRegistered) {
+                          return Text(
+                            "you have been registered ✔️✔️",
+                            style: GoogleFonts.montserrat(
+                                fontSize: 18, fontWeight: FontWeight.w600),
+                          );
+                        } else if (state is UserRegisterError) {
+                          return Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              Text(
+                                " there was an error registering you",
+                                style: GoogleFonts.montserrat(
+                                    fontSize: 18, fontWeight: FontWeight.w600),
+                              ),
+                              ElevatedButton(
+                                onPressed: () {
+                                  context
+                                      .read<GoogleRegisterCubit>()
+                                      .registeruser(
+                                          name_controller.text,
+                                          number_controller.text,
+                                          bio_controller.text,
+                                          gender_controller.text,
+                                          photourl_controller.text,
+                                          position);
+                                },
+                                child: Text("Try Again"),
+                                style: ButtonStyle(
+                                  backgroundColor: MaterialStateProperty.all(
+                                      Theme.of(context).primaryColor),
+                                ),
+                              )
+                            ],
                           );
                         } else {
                           return Container(
@@ -392,92 +535,140 @@ class _Reg1State extends State<Reg1> with WidgetsBindingObserver {
                       ),
                     ),
                   ),
-                  Expanded(
-                    child: Container(
-                      padding: EdgeInsets.all(40),
-                      decoration: BoxDecoration(),
-                      child: InkWell(
-                        onTap: () {
-                          int num = context.read<GoogleRegisterCubit>().page;
-                          print(num);
-                          if (num == 1) {
-                            if (name_controller.text != "") {
-                              update();
-                            } else {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(
-                                      content:
-                                          Text("Please Provide proper name!")));
-                            }
-                          } else if (num == 2) {
-                            if (number_controller.text != "" &&
-                                number_controller.text.length == 10) {
-                              update();
-                            } else
-                              ScaffoldMessenger(
-                                  child: SnackBar(
-                                      content: Text("Enter a Valid Number")));
-                          } else if (num == 3) {
-                            print("Page 3");
-                            if (gender_enable) {
-                              update();
-                            } else {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(
-                                      content:
-                                          Text("Please Select an option!")));
-                            }
-                          } else if (num == 4) {
-                            if (bio_controller.text.length > 5) {
-                              update();
-                            } else {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(
-                                      content: Text(
-                                          "Enter a valid bio > 8 words!")));
-                            }
-                          } else if (num == 5) {
-                            if (photo_enable) {
-                              update();
-                            } else {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(content: Text("Chose a picture!")));
-                            }
-                          } else if (num == 6) {
-                            if (location_enable) {
-                              update();
-                              Navigator.pushReplacementNamed(
-                                  context, HOME_ROUTE);
-                            } else {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(
-                                      content:
-                                          Text("Location Denied / Error")));
-                            }
-                          }
-                        },
+                  BlocBuilder<GoogleRegisterCubit, GoogleRegisterState>(
+                    builder: (context, state) {
+                      return Expanded(
                         child: Container(
-                          decoration: BoxDecoration(
-                            border: Border.all(
-                                color: Theme.of(context).primaryColor),
-                            borderRadius: BorderRadius.circular(40),
-                          ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                "Next  ",
-                                style: GoogleFonts.montserrat(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.w600,
-                                ),
+                          padding: EdgeInsets.all(40),
+                          decoration: BoxDecoration(),
+                          child: InkWell(
+                            onTap: () {
+                              int num =
+                                  context.read<GoogleRegisterCubit>().page;
+                              print(num);
+                              if (num == 1) {
+                                if (name_controller.text != "") {
+                                  update();
+                                } else {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                          content: Text(
+                                              "Please Provide proper name!")));
+                                }
+                              } else if (num == 2) {
+                                if (number_controller.text != "" &&
+                                    number_controller.text.length == 10) {
+                                  update();
+                                } else
+                                  ScaffoldMessenger(
+                                      child: SnackBar(
+                                          content:
+                                              Text("Enter a Valid Number")));
+                              } else if (num == 3) {
+                                print("Page 3");
+                                if (gender_enable) {
+                                  update();
+                                } else {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                          content: Text(
+                                              "Please Select an option!")));
+                                }
+                              } else if (num == 4) {
+                                if (bio_controller.text.length > 5) {
+                                  update();
+                                } else {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                          content: Text(
+                                              "Enter a valid bio > 8 words!")));
+                                }
+                              } else if (num == 5) {
+                                if (photo_enable) {
+                                  update();
+                                } else {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                          content: Text("Chose a picture!")));
+                                }
+                              } else if (num == 6) {
+                                if (location_enable) {
+                                  update();
+                                  // .pushReplacementNamed(
+                                  //     context, HOME_ROUTE);Navigator
+                                } else {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                          content:
+                                              Text("Location Denied / Error")));
+                                }
+                              } else if (num == 7) {
+                                int n = state.num;
+                                if (n == 7) {
+                                  if ((state as GetInvite)
+                                          .invite_contoller
+                                          .text
+                                          .length ==
+                                      5) {
+                                    context
+                                        .read<GoogleRegisterCubit>()
+                                        .verifyinvite((state as GetInvite)
+                                            .invite_contoller
+                                            .text);
+                                  } else {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                        SnackBar(
+                                            content:
+                                                Text("Enter a valid invite")));
+                                  }
+                                } else if (n == 9) {
+                                  print(
+                                      "Name : ${name_controller.text} \n Number : ${number_controller.text} \n Bio : ${bio_controller.text} \n Gender : ${gender_controller.text} \n  PhotoURL : ${photourl_controller.text}");
+                                  context
+                                      .read<GoogleRegisterCubit>()
+                                      .registeruser(
+                                          name_controller.text,
+                                          number_controller.text,
+                                          bio_controller.text,
+                                          gender_controller.text,
+                                          photourl_controller.text,
+                                          position);
+                                } else if (n == 11) {
+                                  if (state is UserRegistered) {
+                                    context
+                                        .read<AuthstatusCubit>()
+                                        .autheticateuser(state.user);
+                                  }
+
+                                  Navigator.pushReplacementNamed(
+                                      context, HOME_ROUTE);
+                                }
+                              }
+                            },
+                            child: Container(
+                              decoration: BoxDecoration(
+                                border: Border.all(
+                                    color: Theme.of(context).primaryColor),
+                                borderRadius: BorderRadius.circular(40),
                               ),
-                              Icon(FontAwesomeIcons.arrowAltCircleRight)
-                            ],
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    "Next  ",
+                                    style: GoogleFonts.montserrat(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  ),
+                                  Icon(FontAwesomeIcons.arrowAltCircleRight)
+                                ],
+                              ),
+                            ),
                           ),
                         ),
-                      ),
-                    ),
+                      );
+                    },
                   ),
                 ],
               ),

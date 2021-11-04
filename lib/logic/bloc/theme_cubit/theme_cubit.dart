@@ -7,10 +7,17 @@ part 'theme_state.dart';
 class ThemeCubit extends Cubit<ThemeState> {
   ThemeCubit() : super(DarkTheme(themeData: AppTheme.darkTheme));
 
-  void changetheme(ThemeData theme) {
+  void changetheme() {
     if (state is LightTheme)
       emit(DarkTheme(themeData: AppTheme.darkTheme));
     else
       emit(LightTheme(themeData: AppTheme.lightTheme));
+  }
+
+  String gettheme() {
+    if (state is LightTheme)
+      return "Light";
+    else
+      return "Dark";
   }
 }

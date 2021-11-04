@@ -1,4 +1,5 @@
 import 'package:bloc_custom_firebase/constants.dart';
+import 'package:bloc_custom_firebase/logic/bloc/auth_status/authstatus_cubit.dart';
 import 'package:bloc_custom_firebase/logic/bloc/onboard/onboard_cubit.dart';
 import 'package:bloc_custom_firebase/logic/bloc/theme_cubit/theme_cubit.dart';
 import 'package:flutter/material.dart';
@@ -28,7 +29,7 @@ class _FrontPageState extends State<FrontPage> {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          BlocProvider.of<ThemeCubit>(context).changetheme(Theme.of(context));
+          BlocProvider.of<ThemeCubit>(context).changetheme();
         },
       ),
       appBar: AppBar(
@@ -123,9 +124,12 @@ class _FrontPageState extends State<FrontPage> {
                       return Container();
                   },
                   listener: (context, state) {
-                    if (state is OnboardHome)
+                    if (state is OnboardHome) {
                       Navigator.pushReplacementNamed(context, HOME_ROUTE);
-                    else if (state is OnboardRegister)
+                      context
+                          .read<AuthstatusCubit>()
+                          .autheticateuser(state.user);
+                    } else if (state is OnboardRegister)
                       Navigator.pushReplacementNamed(context, REGISTER_PAGE1);
                   },
                 ),

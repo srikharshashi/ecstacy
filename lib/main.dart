@@ -1,3 +1,4 @@
+import 'package:bloc_custom_firebase/logic/bloc/auth_status/authstatus_cubit.dart';
 import 'package:bloc_custom_firebase/logic/bloc/gender_cubit/gender_cubit.dart';
 import 'package:bloc_custom_firebase/logic/bloc/location_cubit/location_cubit.dart';
 import 'package:bloc_custom_firebase/logic/bloc/logout/logout_cubit.dart';
@@ -27,14 +28,16 @@ class MyApp extends StatelessWidget {
       providers: [
         BlocProvider(create: (context) => GenderCubit()),
         BlocProvider(
-            create: (context) => SplashscreenCubit(fb_service: FB_Service())),
+            create: (context) => SplashscreenCubit(
+                fb_service: FB_Service(), dataBaseService: DataBaseService())),
         BlocProvider(
             create: (context) => LogoutCubit(repossitory: FB_Service())),
         BlocProvider(
             create: (context) => OnboardCubit(
                 fb: FB_Service(), dataBaseService: DataBaseService())),
         BlocProvider(
-          create: (context) => GoogleRegisterCubit(fb_service: FB_Service()),
+          create: (context) => GoogleRegisterCubit(
+              fb_service: FB_Service(), dataBaseService: DataBaseService()),
         ),
         BlocProvider(
           create: (context) => ThemeCubit(),
@@ -42,7 +45,9 @@ class MyApp extends StatelessWidget {
         BlocProvider(
             create: (context) =>
                 LocationCubit(locationService: LocationService())),
-        BlocProvider(create: (context) => NumberRegistercubit(fb_service: FB_Service())),
+        BlocProvider(
+            create: (context) => NumberRegistercubit(fb_service: FB_Service())),
+        BlocProvider(create: (context) => AuthstatusCubit()),
       ],
       child:
           BlocBuilder<ThemeCubit, ThemeState>(builder: (context, themestate) {

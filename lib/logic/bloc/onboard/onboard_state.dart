@@ -9,10 +9,15 @@ abstract class OnboardState extends Equatable {
 
 class OnboardInitial extends OnboardState {}
 
-class OnboardLoad extends OnboardState{}
+class OnboardLoad extends OnboardState {}
 
-class OnboardError extends OnboardState{}
+class OnboardError extends OnboardState {}
 
-class OnboardHome extends OnboardState{}
+class OnboardHome extends OnboardState {
+  User user;
+  OnboardHome({
+    required this.user,
+  });
+}
 
-class OnboardRegister extends OnboardState{}
+class OnboardRegister extends OnboardState {}

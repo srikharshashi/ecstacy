@@ -100,7 +100,7 @@ class NameField extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
           Text(
-            "Enter your name",
+            "enter your name",
             style: GoogleFonts.montserrat(
               fontSize: 20,
               fontWeight: FontWeight.w600,
@@ -131,7 +131,7 @@ class NumberField extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
           Text(
-            "Enter your Number",
+            "enter your number",
             style: GoogleFonts.montserrat(
               fontSize: 20,
               fontWeight: FontWeight.w600,
@@ -161,7 +161,7 @@ class GenderSelect extends StatelessWidget {
       child: Column(
         children: [
           Text(
-            "Select your gender",
+            "select your gender",
             style: GoogleFonts.montserrat(
               fontSize: 20,
               fontWeight: FontWeight.w600,
