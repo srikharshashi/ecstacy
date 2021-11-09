@@ -4,6 +4,8 @@ Ecstasy is a match making app used to match people based on preferences and ques
 It uses a clustering algorithm to cluster users of similar kind 
 Credits to [Dedeepya](https://github.com/dedeepya-M) for making the ML Model !
 
+Includes features like invite based and also face detection using Google API's
+
 ### Progress :: The app is still in progress 
 ## Preview
 
