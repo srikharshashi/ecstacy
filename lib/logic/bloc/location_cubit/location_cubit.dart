@@ -4,7 +4,9 @@ import 'package:geolocator/geolocator.dart';
 part 'location_state.dart';
 
 class LocationCubit extends Cubit<LocationState> {
-  LocationCubit({required this.locationService}) : super(LocationInitial());
+  LocationCubit({required this.locationService}) : super(LocationInitial()) {
+    get_location();
+  }
 
   LocationService locationService;
 
@@ -15,5 +17,9 @@ class LocationCubit extends Cubit<LocationState> {
     print(location[0].locality.toString());
     emit(LocationSucess(
         location: location[0].locality.toString(), position: position));
+  }
+
+  void reload() {
+    emit(LocationInitial());
   }
 }

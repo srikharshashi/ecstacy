@@ -11,9 +11,11 @@ class SplashScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocListener<SplashscreenCubit, SplashscreenState>(
       listener: (context, state) {
-        if (state is Loggedin) {
+        if (state is LoggedinQT) {
           context.read<AuthstatusCubit>().autheticateuser(state.user);
           Navigator.pushReplacementNamed(context, HOME_ROUTE);
+        } else if (state is LoggedinQF) {
+          Navigator.pushReplacementNamed(context, QUESTIONS_HOME);
         } else if (state is UnAuthenticated)
           Navigator.pushReplacementNamed(context, FRONT_PAGE);
       },

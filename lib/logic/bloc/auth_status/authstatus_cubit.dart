@@ -5,7 +5,7 @@ import 'package:equatable/equatable.dart';
 part 'authstatus_state.dart';
 
 class AuthstatusCubit extends Cubit<AuthstatusState> {
-  AuthstatusCubit() : super(unautheticated());
+  AuthstatusCubit() : super(Unautheticated());
 
   void autheticateuser(User user) {
   // void autheticateuser() {
@@ -14,6 +14,6 @@ class AuthstatusCubit extends Cubit<AuthstatusState> {
   }
 
   void unauthenticate() {
-    emit(unautheticated());
+    emit(Unautheticated());
   }
 }

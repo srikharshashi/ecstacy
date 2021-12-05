@@ -13,6 +13,7 @@ import 'package:bloc_custom_firebase/services/location_serice.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'logic/bloc/google_register/google_register_cubit.dart';
+import 'logic/bloc/google_register/invite_controller/invite_cubit.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -43,6 +44,9 @@ class MyApp extends StatelessWidget {
           create: (context) => ThemeCubit(),
         ),
         BlocProvider(
+        create: (context) => InviteCubit(dataBaseService: DataBaseService())),
+        BlocProvider(
+            lazy: true,
             create: (context) =>
                 LocationCubit(locationService: LocationService())),
         BlocProvider(

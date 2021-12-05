@@ -1,24 +1,28 @@
 class User {
   String name;
-  String bio;
+  String bio = "";
   String email;
   String photoURL;
   String gender;
   String number;
-  User({
-    required this.name,
-    required this.bio,
-    required this.email,
-    required this.photoURL,
-    required this.gender,
-    required this.number,
-  });
+  int age;
+  bool attemptedques;
+  User(
+      {required this.name,
+      required this.email,
+      required this.photoURL,
+      required this.gender,
+      required this.age,
+      required this.number,
+      required this.attemptedques});
 
   User.frommap(Map<dynamic, dynamic> user)
       : name = user["name"] as String,
+        age=user["age"] as int,
         bio = user["bio"] as String,
         email = user["email"] as String,
         photoURL = user["photoURL"] as String,
         gender = user["gender"] as String,
-        number = user["number"] as String;
+        number = user["number"] as String,
+        attemptedques = user["attemptedques"] as bool;
 }

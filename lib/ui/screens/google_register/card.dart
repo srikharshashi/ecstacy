@@ -1,6 +1,8 @@
 import 'package:bloc_custom_firebase/logic/bloc/cardcontrollercubi/cardcontroller_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:tcard/tcard.dart';
 
 // class User_Card extends StatefulWidget {
@@ -74,7 +76,7 @@ class _User_CardState extends State<User_Card> {
         child: TCard(
           slideSpeed: 12,
           size: (Size(MediaQuery.of(context).size.width,
-              MediaQuery.of(context).size.height * 1.2)),
+              MediaQuery.of(context).size.height * 0.8)),
           cards: getcards(MediaQuery.of(context).size.height),
           lockYAxis: true,
         ),
@@ -94,27 +96,70 @@ List<String> images = [
 List<Widget> getcards(double height) => List.generate(
       images.length,
       (int index) {
-        return Container(
-          height: height,
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(16.0),
-            boxShadow: [
-              BoxShadow(
-                offset: Offset(0, 17),
-                blurRadius: 23.0,
-                spreadRadius: -13.0,
-                color: Colors.black54,
-              )
-            ],
-          ),
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(16.0),
-            child: Image.network(
-              images[index],
-              fit: BoxFit.cover,
+        return Stack(children: [
+          Container(
+            height: height,
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(16.0),
+              boxShadow: [
+                BoxShadow(
+                  offset: Offset(0, 17),
+                  blurRadius: 23.0,
+                  spreadRadius: -13.0,
+                  color: Colors.black54,
+                )
+              ],
+            ),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(16.0),
+              child: Image.network(
+                images[index],
+                fit: BoxFit.cover,
+              ),
             ),
           ),
-        );
+          Positioned(
+            top: height / 2.2,
+            left: 10,
+            child: Text(
+              "Megumi ",
+              style: GoogleFonts.montserrat(
+                  fontSize: 25,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.purple[600]),
+            ),
+          ),
+          Positioned(
+            top: height / 2.0,
+            left: 15,
+            child: Text(
+              "18",
+              style: GoogleFonts.montserrat(
+                  fontSize: 25,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.purple[600]),
+            ),
+          ),
+          Positioned(
+              top: height / 1.8,
+              left: 15,
+              child: Icon(
+                FontAwesomeIcons.mars,
+                size: 20,
+                color: Colors.purple[600],
+              )),
+          Positioned(
+            top: height / 1.7,
+            left: 15,
+            child: Text(
+              "man my dad is as strong as gojo",
+              style: GoogleFonts.montserrat(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.purple[600]),
+            ),
+          )
+        ]);
       },
     );

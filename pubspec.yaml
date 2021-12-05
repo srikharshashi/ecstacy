@@ -32,6 +32,9 @@ dependencies:
   random_string: ^2.3.1
   persistent_bottom_nav_bar: ^4.0.2
   tcard: ^1.3.5
+  group_button: ^3.3.1
+  loading_animation_widget: ^0.0.2+2
+  page_transition: ^2.0.4
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -42,5 +45,6 @@ flutter:
     - lib/assets/svg/img2.svg
     - lib/assets/img/sukuna.jpg
     - lib/assets/img/muzan.png
+    - lib/assets/svg/questions.svg
 
 

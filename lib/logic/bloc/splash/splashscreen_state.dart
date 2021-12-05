@@ -7,11 +7,18 @@ class SplashscreenLoading extends SplashscreenState {}
 
 class ConnectivityError extends SplashscreenState {}
 
-class Loggedin extends SplashscreenState {
+class LoggedinQT extends SplashscreenState {
   User user;
-  Loggedin({
+  LoggedinQT({
     required this.user,
   });
 }
+class LoggedinQF extends SplashscreenState {
+  User user;
+  LoggedinQF({
+    required this.user,
+  });
+}
+
 
 class UnAuthenticated extends SplashscreenState {}

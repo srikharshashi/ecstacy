@@ -25,7 +25,10 @@ class OnboardCubit extends Cubit<OnboardState> {
         //if an doly if the user exsits
         var user_map = await dataBaseService.getusermap(user_email);
         var user_obj = User.frommap(user_map);
-        emit(OnboardHome(user: user_obj));
+        if (user_obj.attemptedques)
+          emit(OnboardHome(user: user_obj));
+        else
+          emit(OnboardQ(user: user_obj));
       } else
         emit(OnboardRegister());
     } else

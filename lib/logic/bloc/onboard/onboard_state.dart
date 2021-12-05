@@ -13,6 +13,11 @@ class OnboardLoad extends OnboardState {}
 
 class OnboardError extends OnboardState {}
 
+class OnboardQ extends OnboardState {
+  User user;
+  OnboardQ({required this.user});
+}
+
 class OnboardHome extends OnboardState {
   User user;
   OnboardHome({

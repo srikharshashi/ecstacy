@@ -72,12 +72,17 @@ class ProgressBar extends StatelessWidget {
                         : Colors.white,
                   ),
                 ),
+                Expanded(
+                    child: Container(
+                  color:
+                      page >= 8 ? Theme.of(context).primaryColor : Colors.white,
+                )),
               ],
             ),
           ),
           Divider(),
           Text(
-            "$page/7",
+            "$page/8",
             style: GoogleFonts.montserrat(
                 fontSize: 20, fontWeight: FontWeight.w600),
           )
@@ -389,6 +394,23 @@ class GenderCont extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+}
+
+class Appbar extends StatefulWidget {
+  const Appbar({Key? key}) : super(key: key);
+
+  @override
+  State<Appbar> createState() => _AppbarState();
+}
+
+class _AppbarState extends State<Appbar> {
+  @override
+  Widget build(BuildContext context) {
+    return AppBar(
+      centerTitle: true,
+      title: Text("Ecstacy"),
     );
   }
 }

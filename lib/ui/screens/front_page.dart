@@ -129,6 +129,8 @@ class _FrontPageState extends State<FrontPage> {
                       context
                           .read<AuthstatusCubit>()
                           .autheticateuser(state.user);
+                    } else if (state is OnboardQ) {
+                      Navigator.pushReplacementNamed(context, QUESTIONS_HOME);
                     } else if (state is OnboardRegister)
                       Navigator.pushReplacementNamed(context, REGISTER_PAGE1);
                   },

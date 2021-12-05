@@ -45,11 +45,6 @@ class DataBaseService {
     return ans;
   }
 
-  // Future<QuerySnapshot> get_users() async {
-  //   var ans = await FirebaseFirestore.instance.collection('users').get();
-  //   return ans;
-  // }
-
   Future<bool> verifyinvite(String invite) async {
     bool ans = false;
     try {
@@ -73,7 +68,7 @@ class DataBaseService {
   }
 
   Future<bool> adduser(String name, String number, String gender,
-      String photourl, String bio, String email, Position position
+      String photourl, String email, Position position, int age, String bio
       // GeoPoint location,
       ) async {
     bool status = false;
@@ -82,8 +77,9 @@ class DataBaseService {
           FirebaseFirestore.instance.collection('users');
 
       users.add({
+        "age": age,
+        "bio": bio,
         'name': name,
-        'bio': bio,
         'email': email,
         "photoURL": photourl,
         "gender": gender,
