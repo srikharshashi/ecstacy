@@ -297,6 +297,7 @@ class _Reg6State extends State<Reg6> with WidgetsBindingObserver {
                       Container(
                         height: (height / (2.5)) * 0.4,
                         child: ProgressBar(
+                          n:8,
                             page: context.read<GoogleRegisterCubit>().page),
                       )
                     ],

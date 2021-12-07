@@ -4,6 +4,7 @@ import 'package:bloc_custom_firebase/logic/bloc/location_cubit/location_cubit.da
 import 'package:bloc_custom_firebase/logic/bloc/logout/logout_cubit.dart';
 import 'package:bloc_custom_firebase/logic/bloc/number_cubit/numbercubit.dart';
 import 'package:bloc_custom_firebase/logic/bloc/onboard/onboard_cubit.dart';
+import 'package:bloc_custom_firebase/logic/bloc/question_controller/question_controller_cubit.dart';
 import 'package:bloc_custom_firebase/logic/bloc/splash/splashscreen_cubit.dart';
 import 'package:bloc_custom_firebase/logic/bloc/theme_cubit/theme_cubit.dart';
 import 'package:bloc_custom_firebase/router.dart';
@@ -44,7 +45,8 @@ class MyApp extends StatelessWidget {
           create: (context) => ThemeCubit(),
         ),
         BlocProvider(
-        create: (context) => InviteCubit(dataBaseService: DataBaseService())),
+            create: (context) =>
+                InviteCubit(dataBaseService: DataBaseService())),
         BlocProvider(
             lazy: true,
             create: (context) =>
@@ -52,6 +54,7 @@ class MyApp extends StatelessWidget {
         BlocProvider(
             create: (context) => NumberRegistercubit(fb_service: FB_Service())),
         BlocProvider(create: (context) => AuthstatusCubit()),
+        BlocProvider(create: (context) => QuestionControllerCubit()),
       ],
       child:
           BlocBuilder<ThemeCubit, ThemeState>(builder: (context, themestate) {

@@ -6,21 +6,25 @@ import "package:flutter/material.dart";
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 import '../../../constants.dart';
 
-class Question1 extends StatefulWidget {
-  const Question1({Key? key}) : super(key: key);
+class Questions_Completed extends StatefulWidget {
+  const Questions_Completed({Key? key}) : super(key: key);
 
   @override
-  _Question1State createState() => _Question1State();
+  _Questions_CompletedState createState() => _Questions_CompletedState();
 }
 
-//Question about bio
-class _Question1State extends State<Question1> {
-  final formkey = GlobalKey<FormState>();
-
+class _Questions_CompletedState extends State<Questions_Completed> {
   @override
+  void initState() {
+    print(BlocProvider.of<QuestionControllerCubit>(context).data);
+    context.read<QuestionControllerCubit>().submit();
+    super.initState();
+  }
+
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
@@ -71,46 +75,46 @@ class _Question1State extends State<Question1> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    Form(
-                      key: formkey,
-                      child: Container(
-                        height: (height / (2.5)) * 0.6,
-                        width: width,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            Text("enter your bio",
-                                style: GoogleFonts.montserrat(
-                                    fontSize: 18, fontWeight: FontWeight.w700)),
-                            Text("pls keep it smol and accurate",
-                                style: GoogleFonts.montserrat(
-                                    fontSize: 13, fontWeight: FontWeight.w400)),
-                            Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 25),
-                              child: TextFormField(
-                                validator: (value) {
-                                  if (value!.length < 5)
-                                    return "enter at leat 5 characters";
-                                  else if (value.length >= 20)
-                                    return "bio must be <20 characters";
-                                  else
-                                    return null;
-                                },
-                                onSaved: (value) {
-                                  BlocProvider.of<QuestionControllerCubit>(
-                                          context)
-                                      .data["bio"] = value;
-                                },
-                              ),
-                            )
-                          ],
-                        ),
+                    Container(
+                      height: (height / (2.5)) * 0.6,
+                      width: width,
+                      child: BlocBuilder<QuestionControllerCubit,
+                          QuestionControllerState>(
+                        builder: (context, state) {
+                          if (state is QuestionLoad) {
+                            return Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [
+                                Text("registering please wait",
+                                    style: GoogleFonts.montserrat(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.w700)),
+                                LoadingAnimationWidget.halfTringleDot(
+                                    color: Theme.of(context).primaryColor,
+                                    size: 45)
+                              ],
+                            );
+                          } else if (state is QuestionsSuccess) {
+                            return Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [
+                                Text(
+                                  "You have been registered",
+                                  style: GoogleFonts.montserrat(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.w700),
+                                ),
+                              ],
+                            );
+                          } else {
+                            return Container();
+                          }
+                        },
                       ),
                     ),
                     Container(
                       height: (height / (2.5)) * 0.4,
-                      child: ProgressBar(n: 6, page: 1),
+                      child: ProgressBar(n: 6, page: 6),
                     )
                   ],
                 ),
@@ -120,13 +124,7 @@ class _Question1State extends State<Question1> {
                 width: width,
                 padding: EdgeInsets.symmetric(horizontal: 60, vertical: 15),
                 child: InkWell(
-                  onTap: () {
-                    final isValid = formkey.currentState!.validate();
-                    if (isValid) {
-                      formkey.currentState!.save();
-                      Navigator.pushReplacementNamed(context, QUESTION2);
-                    }
-                  },
+                  onTap: () {},
                   child: Container(
                     decoration: BoxDecoration(
                         border:

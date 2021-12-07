@@ -6,7 +6,8 @@ import 'package:google_fonts/google_fonts.dart';
 
 class ProgressBar extends StatelessWidget {
   int page;
-  ProgressBar({required this.page});
+  int n;
+  ProgressBar({required this.page, required this.n});
   @override
   Widget build(BuildContext context) {
     print(MediaQuery.of(context).size.height);
@@ -23,66 +24,75 @@ class ProgressBar extends StatelessWidget {
             ),
             child: Row(
               children: [
-                Expanded(
-                  child: Container(
-                    color: page >= 1
-                        ? Theme.of(context).primaryColor
-                        : Colors.white,
-                  ),
-                ),
-                Expanded(
-                  child: Container(
-                    color: page >= 2
-                        ? Theme.of(context).primaryColor
-                        : Colors.white,
-                  ),
-                ),
-                Expanded(
-                  child: Container(
-                    color: page >= 3
-                        ? Theme.of(context).primaryColor
-                        : Colors.white,
-                  ),
-                ),
-                Expanded(
-                  child: Container(
-                    color: page >= 4
-                        ? Theme.of(context).primaryColor
-                        : Colors.white,
-                  ),
-                ),
-                Expanded(
-                  child: Container(
-                    color: page >= 5
-                        ? Theme.of(context).primaryColor
-                        : Colors.white,
-                  ),
-                ),
-                Expanded(
-                  child: Container(
-                    color: page >= 6
-                        ? Theme.of(context).primaryColor
-                        : Colors.white,
-                  ),
-                ),
-                Expanded(
-                  child: Container(
-                    color: page >= 7
-                        ? Theme.of(context).primaryColor
-                        : Colors.white,
-                  ),
-                ),
-                Expanded(
+                if (n >= 1)
+                  Expanded(
                     child: Container(
-                  color:
-                      page >= 8 ? Theme.of(context).primaryColor : Colors.white,
-                )),
+                      color: page >= 1
+                          ? Theme.of(context).primaryColor
+                          : Colors.white,
+                    ),
+                  ),
+                if (n >= 2)
+                  Expanded(
+                    child: Container(
+                      color: page >= 2
+                          ? Theme.of(context).primaryColor
+                          : Colors.white,
+                    ),
+                  ),
+                if (n >= 3)
+                  Expanded(
+                    child: Container(
+                      color: page >= 3
+                          ? Theme.of(context).primaryColor
+                          : Colors.white,
+                    ),
+                  ),
+                if (n >= 4)
+                  Expanded(
+                    child: Container(
+                      color: page >= 4
+                          ? Theme.of(context).primaryColor
+                          : Colors.white,
+                    ),
+                  ),
+                if (n >= 5)
+                  Expanded(
+                    child: Container(
+                      color: page >= 5
+                          ? Theme.of(context).primaryColor
+                          : Colors.white,
+                    ),
+                  ),
+                if (n >= 6)
+                  Expanded(
+                    child: Container(
+                      color: page >= 6
+                          ? Theme.of(context).primaryColor
+                          : Colors.white,
+                    ),
+                  ),
+                if (n >= 7)
+                  Expanded(
+                    child: Container(
+                      color: page >= 7
+                          ? Theme.of(context).primaryColor
+                          : Colors.white,
+                    ),
+                  ),
+                if (n >= 8)
+                  Expanded(
+                      child: Container(
+                    color: page >= 8
+                        ? Theme.of(context).primaryColor
+                        : Colors.white,
+                  )),
               ],
             ),
           ),
           Divider(),
           Text(
-            "$page/8",
+            "$page/$n",
             style: GoogleFonts.montserrat(
                 fontSize: 20, fontWeight: FontWeight.w600),
           )

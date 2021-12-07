@@ -9,12 +9,16 @@ import 'package:bloc_custom_firebase/ui/screens/home/HomePage.dart';
 import 'package:bloc_custom_firebase/ui/screens/google_register/register_pages/name_reg.dart';
 import 'package:bloc_custom_firebase/ui/screens/front_page.dart';
 import 'package:bloc_custom_firebase/ui/screens/questions/question1.dart';
-import 'package:bloc_custom_firebase/ui/screens/questions/question2.dart';
 import 'package:bloc_custom_firebase/ui/screens/questions/question3.dart';
-import 'package:bloc_custom_firebase/ui/screens/questions/question31.dart';
+import 'package:bloc_custom_firebase/ui/screens/questions/question5.dart';
+import 'package:bloc_custom_firebase/ui/screens/questions/question5.dart';
+import 'package:bloc_custom_firebase/ui/screens/questions/question2.dart';
+import 'package:bloc_custom_firebase/ui/screens/questions/question21.dart';
 import 'package:bloc_custom_firebase/ui/screens/questions/question4.dart';
 import 'package:bloc_custom_firebase/ui/screens/questions/question41.dart';
+import 'package:bloc_custom_firebase/ui/screens/questions/question6.dart';
 import 'package:bloc_custom_firebase/ui/screens/questions/question_home.dart';
+import 'package:bloc_custom_firebase/ui/screens/questions/questions_comp.dart';
 import 'package:bloc_custom_firebase/ui/screens/spalsh_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
@@ -65,19 +69,28 @@ class AppRouter {
             child: Question1(), type: PageTransitionType.rightToLeft);
       case QUESTION2:
         return PageTransition(
-            child: Qeustion2(), type: PageTransitionType.rightToLeft);
+            child: Question2(), type: PageTransitionType.rightToLeft);
+      case QUESTION21:
+        return PageTransition(
+            child: Question21(), type: PageTransitionType.rightToLeft);
       case QUESTION3:
         return PageTransition(
             child: Question3(), type: PageTransitionType.rightToLeft);
-      case QUESTION31:
-        return PageTransition(
-            child: Question31(), type: PageTransitionType.rightToLeft);
       case QUESTION4:
         return PageTransition(
             child: Question4(), type: PageTransitionType.rightToLeft);
+      case QUESTION5:
+        return PageTransition(
+            child: Question5(), type: PageTransitionType.rightToLeft);
+      case QUESTION6:
+        return PageTransition(
+            child: Question6(), type: PageTransitionType.rightToLeft);
       case QUESTION41:
         return PageTransition(
             child: Question41(), type: PageTransitionType.rightToLeft);
+      case QUESTIONS_COMP:
+        return PageTransition(
+            child: Questions_Completed(), type: PageTransitionType.rightToLeft);
       default:
         return null;
     }

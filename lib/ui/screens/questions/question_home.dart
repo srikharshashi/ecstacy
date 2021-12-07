@@ -1,4 +1,5 @@
 import 'package:bloc_custom_firebase/constants.dart';
+import 'package:bloc_custom_firebase/logic/bloc/question_controller/question_controller_cubit.dart';
 import 'package:bloc_custom_firebase/logic/bloc/theme_cubit/theme_cubit.dart';
 import "package:flutter/material.dart";
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -31,7 +32,6 @@ class _QuestionsState extends State<Questions> {
             IconButton(
               icon: Icon(
                 FontAwesomeIcons.powerOff,
-                // size: 23,
               ),
               onPressed: () {},
             )
@@ -40,17 +40,13 @@ class _QuestionsState extends State<Questions> {
         body: Padding(
           padding: EdgeInsets.all(15),
           child: Container(
-            decoration: BoxDecoration(
-                // border: Border.all(color: Colors.white),
-                ),
+            decoration: BoxDecoration(),
             child: Column(
               children: [
                 Container(
                   height: height / 6,
                   width: width,
-                  decoration: BoxDecoration(
-                      // border: Border.all(color: Colors.white),
-                      ),
+                  decoration: BoxDecoration(),
                   child: Center(
                     child: Text(
                       "we got some questions for you to match you better!",
@@ -64,9 +60,7 @@ class _QuestionsState extends State<Questions> {
                 ),
                 Container(
                   height: height / 2,
-                  decoration: BoxDecoration(
-                      // border: Border.all(color: Colors.white),
-                      ),
+                  decoration: BoxDecoration(),
                   child: Padding(
                     padding: const EdgeInsets.fromLTRB(30, 10, 10, 10),
                     child: Center(
@@ -84,6 +78,7 @@ class _QuestionsState extends State<Questions> {
                         vertical: 30, horizontal: 50),
                     child: InkWell(
                       onTap: () {
+                        context.read<QuestionControllerCubit>().start();
                         Navigator.pushReplacementNamed(context, QUESTION1);
                       },
                       child: Container(

@@ -139,9 +139,9 @@ class _Reg1State extends State<Reg1> with WidgetsBindingObserver {
                     Container(
                       //Container for progress bart
                       height: (height / (2.5)) * 0.4,
-                      // decoration:
-                      // BoxDecoration(border: Border.all(color: Colors.red)),
                       child: ProgressBar(
+                                                  n:8,
+
                           page: context.read<GoogleRegisterCubit>().page),
                     )
                   ],

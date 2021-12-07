@@ -122,7 +122,7 @@ class _Reg3State extends State<Reg3> with WidgetsBindingObserver {
                                 onSaved: (value) => {
                                   context
                                       .read<GoogleRegisterCubit>()
-                                      .user_data["number"] = value ?? "" 
+                                      .user_data["number"] = value ?? ""
                                 },
                                 validator: (value) {
                                   if (value!.length != 10)
@@ -139,7 +139,7 @@ class _Reg3State extends State<Reg3> with WidgetsBindingObserver {
                     Container(
                       height: (height / (2.5)) * 0.4,
                       child: ProgressBar(
-                          page: context.read<GoogleRegisterCubit>().page),
+                          n: 8, page: context.read<GoogleRegisterCubit>().page),
                     )
                   ],
                 ),

@@ -160,6 +160,7 @@ class _Reg2State extends State<Reg2> with WidgetsBindingObserver {
                           // decoration: BoxDecoration(
                           //     border: Border.all(color: Colors.red)),
                           child: ProgressBar(
+                            n:8,
                               page: context.read<GoogleRegisterCubit>().page)),
                     ]),
               ),

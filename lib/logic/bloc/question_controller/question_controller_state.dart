@@ -9,17 +9,9 @@ abstract class QuestionControllerState extends Equatable {
 
 class QuestionsHome extends QuestionControllerState {}
 
-class Question1 extends QuestionControllerState{}
+class Questionsongoing extends QuestionControllerState{}
 
-class Question2 extends QuestionControllerState{}
 
-class Question3 extends QuestionControllerState{}
+class QuestionLoad extends QuestionControllerState{}
 
-class Question31 extends QuestionControllerState{}
-
-class Question4 extends QuestionControllerState{}
-
-class Question41 extends QuestionControllerState{}
-
-class Question5 extends QuestionControllerState{}
-
+class QuestionsSuccess extends QuestionControllerState{}

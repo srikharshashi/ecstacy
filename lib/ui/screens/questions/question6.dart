@@ -6,19 +6,23 @@ import "package:flutter/material.dart";
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:group_button/group_button.dart';
 
 import '../../../constants.dart';
 
-class Question1 extends StatefulWidget {
-  const Question1({Key? key}) : super(key: key);
+class Question6 extends StatefulWidget {
+  const Question6({Key? key}) : super(key: key);
 
   @override
-  _Question1State createState() => _Question1State();
+  _Question6State createState() => _Question6State();
 }
 
-//Question about bio
-class _Question1State extends State<Question1> {
+//Question about choice of gender
+class _Question6State extends State<Question6> {
   final formkey = GlobalKey<FormState>();
+
+  List<String> values = ["Men", "Women", "Others"];
+  bool _selected = false;
 
   @override
   Widget build(BuildContext context) {
@@ -79,38 +83,53 @@ class _Question1State extends State<Question1> {
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
-                            Text("enter your bio",
+                            Text("show me :",
                                 style: GoogleFonts.montserrat(
                                     fontSize: 18, fontWeight: FontWeight.w700)),
-                            Text("pls keep it smol and accurate",
-                                style: GoogleFonts.montserrat(
-                                    fontSize: 13, fontWeight: FontWeight.w400)),
-                            Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 25),
-                              child: TextFormField(
-                                validator: (value) {
-                                  if (value!.length < 5)
-                                    return "enter at leat 5 characters";
-                                  else if (value.length >= 20)
-                                    return "bio must be <20 characters";
-                                  else
-                                    return null;
-                                },
-                                onSaved: (value) {
+                            GroupButton(
+                              spacing: 10,
+                              isRadio: false,
+                              direction: Axis.horizontal,
+                              selectedBorderColor:
+                                  Theme.of(context).primaryColor,
+                              borderRadius: BorderRadius.circular(20),
+                              unselectedColor: Theme.of(context).canvasColor,
+                              unselectedTextStyle: TextStyle(
+                                  color: Theme.of(context).brightness ==
+                                          Brightness.dark
+                                      ? Colors.white
+                                      : Colors.black),
+                              unselectedBorderColor:
+                                  Theme.of(context).primaryColor,
+                              selectedColor: Theme.of(context).primaryColor,
+                              onSelected: (ind, isSelected) {
+                                _selected = isSelected;
+                                if (BlocProvider.of<QuestionControllerCubit>(
+                                        context)
+                                    .data["interest"]
+                                    .contains(values[ind])) {
+                                  //then remove it because its present twice
                                   BlocProvider.of<QuestionControllerCubit>(
                                           context)
-                                      .data["bio"] = value;
-                                },
-                              ),
-                            )
+                                      .data["interest"]
+                                      .remove(values[ind]);
+                                } else {
+                                  //then just add it
+                                  BlocProvider.of<QuestionControllerCubit>(
+                                          context)
+                                      .data["interest"]
+                                      .add(values[ind]);
+                                }
+                              },
+                              buttons: ["men", "women", "others"],
+                            ),
                           ],
                         ),
                       ),
                     ),
                     Container(
                       height: (height / (2.5)) * 0.4,
-                      child: ProgressBar(n: 6, page: 1),
+                      child: ProgressBar(n: 6, page: 6),
                     )
                   ],
                 ),
@@ -121,10 +140,18 @@ class _Question1State extends State<Question1> {
                 padding: EdgeInsets.symmetric(horizontal: 60, vertical: 15),
                 child: InkWell(
                   onTap: () {
-                    final isValid = formkey.currentState!.validate();
-                    if (isValid) {
-                      formkey.currentState!.save();
-                      Navigator.pushReplacementNamed(context, QUESTION2);
+                    if (_selected) {
+                      if (!BlocProvider.of<QuestionControllerCubit>(context)
+                          .data["interest"]
+                          .isEmpty) {
+                        Navigator.pushReplacementNamed(context, QUESTIONS_COMP);
+                      } else {
+                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                            content: Text("Select one of teh option")));
+                      }
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(content: Text("Select one of teh option")));
                     }
                   },
                   child: Container(

@@ -1,11 +1,16 @@
-import 'package:bloc_custom_firebase/constants.dart';
+import 'package:bloc_custom_firebase/logic/bloc/google_register/google_register_cubit.dart';
+import 'package:bloc_custom_firebase/logic/bloc/question_controller/question_controller_cubit.dart';
 import 'package:bloc_custom_firebase/logic/bloc/theme_cubit/theme_cubit.dart';
-import 'package:flutter/material.dart';
+import 'package:bloc_custom_firebase/ui/screens/google_register/widgets.dart';
+import "package:flutter/material.dart";
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:group_button/group_button.dart';
 
+import '../../../constants.dart';
+
+//Music
 class Question3 extends StatefulWidget {
   const Question3({Key? key}) : super(key: key);
 
@@ -13,90 +18,180 @@ class Question3 extends StatefulWidget {
   _Question3State createState() => _Question3State();
 }
 
-//Question about Pets
 class _Question3State extends State<Question3> {
+  bool _selected = false;
+  int index = -1;
+
+  Map<int, String> values = {
+    0: "bollywood",
+    1: "hollywood",
+    2: "tollywood",
+    3: "EDM",
+    4: "Rock",
+    5: "Pop",
+    6: "Jazz",
+    7: "Techno"
+  };
   @override
   Widget build(BuildContext context) {
-    double height = MediaQuery.of(context).size.height;
-    double width = MediaQuery.of(context).size.width;
-    bool _selected = false;
-
-    return Scaffold(
+    final height = MediaQuery.of(context).size.height;
+    final width = MediaQuery.of(context).size.width;
+    return BlocListener<GoogleRegisterCubit, GoogleRegisterState>(
+      listener: (context, state) {
+        if (state is GoogleRegisterInitial) {
+        } else if (state is GoogleRegisterInterupt) {
+          Navigator.pushReplacementNamed(context, FRONT_PAGE);
+        }
+      },
+      child: Scaffold(
+        resizeToAvoidBottomInset: false,
         floatingActionButton: FloatingActionButton(
           onPressed: () {
             BlocProvider.of<ThemeCubit>(context).changetheme();
           },
         ),
         appBar: AppBar(
+          actions: [
+            IconButton(
+              onPressed: () {
+                BlocProvider.of<GoogleRegisterCubit>(context).logout();
+              },
+              icon: Icon(FontAwesomeIcons.powerOff),
+            )
+          ],
           centerTitle: true,
           title: Text("Ecstacy"),
         ),
         body: Padding(
-          padding: EdgeInsets.all(20),
-          child: Container(
-              child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+          padding: const EdgeInsets.all(15.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Container(
-                // decoration:
-                //     BoxDecoration(border: Border.all(color: Colors.white)),
-                height: height / 2.5,
+                height: height / 7,
                 width: width,
-                padding: EdgeInsets.all(10),
+                child: Center(
+                    child: Text(
+                  "get onboard with us",
+                  style: GoogleFonts.montserrat(
+                      fontSize: 20, fontWeight: FontWeight.w700),
+                )),
+              ),
+              Container(
+                height: height / 2,
+                width: width,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    Text("What do you think of the idea of having pets ?",
-                        textAlign: TextAlign.center,
-                        style: GoogleFonts.montserrat(
-                            fontSize: 20, fontWeight: FontWeight.w700)),
-                    GroupButton(
-                      isRadio: true,
-                      spacing: 10,
-                      direction: Axis.vertical,
-                      selectedBorderColor: Theme.of(context).primaryColor,
-                      borderRadius: BorderRadius.circular(20),
-                      unselectedColor: Theme.of(context).canvasColor,
-                      unselectedTextStyle: TextStyle(
-                          color: Theme.of(context).brightness == Brightness.dark
-                              ? Colors.white
-                              : Colors.black),
-                      unselectedBorderColor: Theme.of(context).primaryColor,
-                      selectedColor: Theme.of(context).primaryColor,
-                      onSelected: (index, isSelected) {
-                        _selected = isSelected;
-                      },
-                      buttons: ["Oh pets are cool!", "Nah Im good.."],
+                    Form(
+                      child: Container(
+                        height: (height / (2.5)) * 0.7,
+                        width: width,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            Text("music taste ??",
+                                style: GoogleFonts.montserrat(
+                                    fontSize: 18, fontWeight: FontWeight.w700)),
+                            Text("try and limit to 2-4",
+                                style: GoogleFonts.montserrat(
+                                    fontSize: 14, fontWeight: FontWeight.w400)),
+                            GroupButton(
+                              spacing: 10,
+                              isRadio: false,
+                              direction: Axis.horizontal,
+                              selectedBorderColor:
+                                  Theme.of(context).primaryColor,
+                              borderRadius: BorderRadius.circular(20),
+                              unselectedColor: Theme.of(context).canvasColor,
+                              unselectedTextStyle: TextStyle(
+                                  color: Theme.of(context).brightness ==
+                                          Brightness.dark
+                                      ? Colors.white
+                                      : Colors.black),
+                              unselectedBorderColor:
+                                  Theme.of(context).primaryColor,
+                              selectedColor: Theme.of(context).primaryColor,
+                              onSelected: (ind, isSelected) {
+                                _selected = isSelected;
+                                if (BlocProvider.of<QuestionControllerCubit>(
+                                        context)
+                                    .data["music"]
+                                    .contains(values[ind])) {
+                                  //then remove it because its present twice
+                                  BlocProvider.of<QuestionControllerCubit>(
+                                          context)
+                                      .data["music"]
+                                      .remove(values[ind]);
+                                } else {
+                                  //then just add it
+                                  BlocProvider.of<QuestionControllerCubit>(
+                                          context)
+                                      .data["music"]
+                                      .add(values[ind]);
+                                }
+                              },
+                              buttons: [
+                                "bollywood",
+                                "hollywood",
+                                "tollywood",
+                                "EDM",
+                                "Rock",
+                                "Pop",
+                                "Jazz",
+                                "Techno"
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
                     ),
+                    Container(
+                      height: (height / (2.5)) * 0.4,
+                      child: ProgressBar(n: 6, page: 3),
+                    )
                   ],
                 ),
               ),
-              InkWell(
-                onTap: () {
-                  if (_selected)
-                    Navigator.pushReplacementNamed(context, QUESTION31);
-                },
-                child: Container(
-                  height: height / 12,
-                  width: width / 1.8,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        "Next",
-                        style: GoogleFonts.montserrat(
-                            fontSize: 20, fontWeight: FontWeight.w700),
-                      ),
-                      Icon(FontAwesomeIcons.signInAlt)
-                    ],
+              Container(
+                height: height / 8,
+                width: width,
+                padding: EdgeInsets.symmetric(horizontal: 60, vertical: 15),
+                child: InkWell(
+                  onTap: () {
+                    if (_selected) {
+                      print(BlocProvider.of<QuestionControllerCubit>(context)
+                          .data["music"]);
+                      Navigator.pushReplacementNamed(context, QUESTION4);
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                          content: Text(
+                              "like select something bro its not that hard")));
+                    }
+                  },
+                  child: Container(
+                    decoration: BoxDecoration(
+                        border:
+                            Border.all(color: Theme.of(context).primaryColor),
+                        borderRadius: BorderRadius.circular(25)),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          "Next   ",
+                          style: GoogleFonts.montserrat(
+                              fontSize: 20, fontWeight: FontWeight.w700),
+                        ),
+                        Icon(FontAwesomeIcons.signInAlt)
+                      ],
+                    ),
                   ),
-                  decoration: BoxDecoration(
-                      border: Border.all(color: Theme.of(context).primaryColor),
-                      borderRadius: BorderRadius.circular(20)),
                 ),
-              )
+              ),
             ],
-          )),
-        ));
+          ),
+        ),
+      ),
+    );
   }
 }
