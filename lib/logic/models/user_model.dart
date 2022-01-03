@@ -7,6 +7,7 @@ class User {
   String number;
   int age;
   bool attemptedques;
+  Map<String, dynamic> data ={};
   User(
       {required this.name,
       required this.email,
@@ -18,11 +19,12 @@ class User {
 
   User.frommap(Map<dynamic, dynamic> user)
       : name = user["name"] as String,
-        age=user["age"] as int,
+        age = user["age"] as int,
         bio = user["bio"] as String,
         email = user["email"] as String,
         photoURL = user["photoURL"] as String,
         gender = user["gender"] as String,
         number = user["number"] as String,
+        data=user["data"] as Map<String,dynamic>,
         attemptedques = user["attemptedques"] as bool;
 }

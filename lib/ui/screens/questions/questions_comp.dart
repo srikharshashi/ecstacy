@@ -25,6 +25,8 @@ class _Questions_CompletedState extends State<Questions_Completed> {
     super.initState();
   }
 
+  bool _enable = false;
+
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
@@ -67,7 +69,7 @@ class _Questions_CompletedState extends State<Questions_Completed> {
                   "get onboard with us",
                   style: GoogleFonts.montserrat(
                       fontSize: 20, fontWeight: FontWeight.w700),
-                )),
+                ),),
               ),
               Container(
                 height: height / 2,
@@ -78,8 +80,14 @@ class _Questions_CompletedState extends State<Questions_Completed> {
                     Container(
                       height: (height / (2.5)) * 0.6,
                       width: width,
-                      child: BlocBuilder<QuestionControllerCubit,
+                      child: BlocConsumer<QuestionControllerCubit,
                           QuestionControllerState>(
+                        listener: (context, state) {
+                          if (state is QuestionsSuccess) {
+                            _enable = false;
+                            
+                          }
+                        },
                         builder: (context, state) {
                           if (state is QuestionLoad) {
                             return Column(
@@ -124,7 +132,12 @@ class _Questions_CompletedState extends State<Questions_Completed> {
                 width: width,
                 padding: EdgeInsets.symmetric(horizontal: 60, vertical: 15),
                 child: InkWell(
-                  onTap: () {},
+                  onTap: () {
+                    if(_enable)
+                    {
+                      
+                    }
+                  },
                   child: Container(
                     decoration: BoxDecoration(
                         border:

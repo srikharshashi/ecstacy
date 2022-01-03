@@ -29,22 +29,6 @@ class DataBaseService {
     return user;
   }
 
-  bool verifphoneuser(String number) {
-    bool ans = false;
-    FirebaseFirestore.instance
-        .collection('users')
-        .get()
-        .then((QuerySnapshot querySnapshot) {
-      querySnapshot.docs.forEach((userDoc) {
-        if (userDoc["number"] == number) {
-          ans = true;
-        }
-      });
-    });
-
-    return ans;
-  }
-
   Future<bool> verifyinvite(String invite) async {
     bool ans = false;
     try {
@@ -79,6 +63,7 @@ class DataBaseService {
       users.add({
         "age": age,
         "bio": bio,
+        "data": {},
         'name': name,
         'email': email,
         "photoURL": photourl,
@@ -94,4 +79,6 @@ class DataBaseService {
     }
     return status;
   }
+
+  void updatedata(Map<String, dynamic> data) {}
 }
