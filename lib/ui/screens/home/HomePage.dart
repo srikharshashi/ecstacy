@@ -89,7 +89,10 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
               ),
             );
           else
-            return Container();
+            return Container(
+              padding: EdgeInsets.all(90),
+              child: Text("oof wrong route ig"),
+            );
         },
       ),
     );
@@ -108,7 +111,12 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
     ),
   );
   List<Widget> _buildScreens(User user) {
-    return [User_Card(photoURL: user.photoURL), Text("2"), Text("3"), Text("4")];
+    return [
+      User_Card(photoURL: user.photoURL),
+      Text("2"),
+      Text("3"),
+      Text("4")
+    ];
   }
 
   List<PersistentBottomNavBarItem> _navBarsItems() {

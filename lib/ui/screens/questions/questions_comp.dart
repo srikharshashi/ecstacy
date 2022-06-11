@@ -1,3 +1,4 @@
+import 'package:bloc_custom_firebase/logic/bloc/auth_status/authstatus_cubit.dart';
 import 'package:bloc_custom_firebase/logic/bloc/google_register/google_register_cubit.dart';
 import 'package:bloc_custom_firebase/logic/bloc/question_controller/question_controller_cubit.dart';
 import 'package:bloc_custom_firebase/logic/bloc/theme_cubit/theme_cubit.dart';
@@ -65,11 +66,12 @@ class _Questions_CompletedState extends State<Questions_Completed> {
                 height: height / 7,
                 width: width,
                 child: Center(
-                    child: Text(
-                  "get onboard with us",
-                  style: GoogleFonts.montserrat(
-                      fontSize: 20, fontWeight: FontWeight.w700),
-                ),),
+                  child: Text(
+                    "get onboard with us",
+                    style: GoogleFonts.montserrat(
+                        fontSize: 20, fontWeight: FontWeight.w700),
+                  ),
+                ),
               ),
               Container(
                 height: height / 2,
@@ -84,8 +86,10 @@ class _Questions_CompletedState extends State<Questions_Completed> {
                           QuestionControllerState>(
                         listener: (context, state) {
                           if (state is QuestionsSuccess) {
-                            _enable = false;
-                            
+                            context
+                                .read<AuthstatusCubit>()
+                                .autheticateuser(state.user);
+                            _enable = true;
                           }
                         },
                         builder: (context, state) {
@@ -99,7 +103,14 @@ class _Questions_CompletedState extends State<Questions_Completed> {
                                         fontWeight: FontWeight.w700)),
                                 LoadingAnimationWidget.halfTringleDot(
                                     color: Theme.of(context).primaryColor,
-                                    size: 45)
+                                    size: 45),
+                                ElevatedButton(
+                                    onPressed: () {
+                                      context
+                                          .read<QuestionControllerCubit>()
+                                          .submit();
+                                    },
+                                    child: Text("Get the doc"))
                               ],
                             );
                           } else if (state is QuestionsSuccess) {
@@ -107,7 +118,7 @@ class _Questions_CompletedState extends State<Questions_Completed> {
                               mainAxisAlignment: MainAxisAlignment.spaceAround,
                               children: [
                                 Text(
-                                  "You have been registered",
+                                  "you have been registered",
                                   style: GoogleFonts.montserrat(
                                       fontSize: 18,
                                       fontWeight: FontWeight.w700),
@@ -115,7 +126,17 @@ class _Questions_CompletedState extends State<Questions_Completed> {
                               ],
                             );
                           } else {
-                            return Container();
+                            return Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [
+                                Text(
+                                  "there was a weird error",
+                                  style: GoogleFonts.montserrat(
+                                      fontSize: 10,
+                                      fontWeight: FontWeight.w700),
+                                ),
+                              ],
+                            );
                           }
                         },
                       ),
@@ -133,9 +154,8 @@ class _Questions_CompletedState extends State<Questions_Completed> {
                 padding: EdgeInsets.symmetric(horizontal: 60, vertical: 15),
                 child: InkWell(
                   onTap: () {
-                    if(_enable)
-                    {
-                      
+                    if (_enable) {
+                      Navigator.pushReplacementNamed(context, HOME_ROUTE);
                     }
                   },
                   child: Container(

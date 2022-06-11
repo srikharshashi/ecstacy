@@ -1,3 +1,4 @@
+import 'package:bloc_custom_firebase/logic/models/user_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:geolocator/geolocator.dart';
 
@@ -60,7 +61,7 @@ class DataBaseService {
       CollectionReference users =
           FirebaseFirestore.instance.collection('users');
 
-      users.add({
+      users.doc(email).set({
         "age": age,
         "bio": bio,
         "data": {},
@@ -80,5 +81,17 @@ class DataBaseService {
     return status;
   }
 
-  void updatedata(Map<String, dynamic> data) {}
+  Future<bool> updatedata(Map<String, dynamic> data, String email) async {
+    bool status = false;
+    try {
+      var snapshot = await FirebaseFirestore.instance
+          .collection("users")
+          .doc(email)
+          .update({"data": data, "bio": data["bio"], "attemptedques": true});
+      status = true;
+    } catch (e) {
+      status = false;
+    }
+    return status;
+  }
 }

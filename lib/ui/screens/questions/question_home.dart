@@ -44,7 +44,7 @@ class _QuestionsState extends State<Questions> {
             child: Column(
               children: [
                 Container(
-                  height: height / 6,
+                  height: height / 7,
                   width: width,
                   decoration: BoxDecoration(),
                   child: Center(

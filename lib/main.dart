@@ -22,8 +22,8 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  final AppRouter appRouter = AppRouter();
-
+  final AppRouter appRouter = AppRouter ();
+  final DataBaseService dataBaseService = DataBaseService();
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
@@ -31,22 +31,21 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (context) => GenderCubit()),
         BlocProvider(
             create: (context) => SplashscreenCubit(
-                fb_service: FB_Service(), dataBaseService: DataBaseService())),
+                fb_service: FB_Service(), dataBaseService: dataBaseService)),
         BlocProvider(
             create: (context) => LogoutCubit(repossitory: FB_Service())),
         BlocProvider(
             create: (context) => OnboardCubit(
-                fb: FB_Service(), dataBaseService: DataBaseService())),
+                fb: FB_Service(), dataBaseService: dataBaseService)),
         BlocProvider(
           create: (context) => GoogleRegisterCubit(
-              fb_service: FB_Service(), dataBaseService: DataBaseService()),
+              fb_service: FB_Service(), dataBaseService: dataBaseService),
         ),
         BlocProvider(
           create: (context) => ThemeCubit(),
         ),
         BlocProvider(
-            create: (context) =>
-                InviteCubit(dataBaseService: DataBaseService())),
+            create: (context) => InviteCubit(dataBaseService: dataBaseService)),
         BlocProvider(
             lazy: true,
             create: (context) =>
@@ -54,7 +53,9 @@ class MyApp extends StatelessWidget {
         BlocProvider(
             create: (context) => NumberRegistercubit(fb_service: FB_Service())),
         BlocProvider(create: (context) => AuthstatusCubit()),
-        BlocProvider(create: (context) => QuestionControllerCubit()),
+        BlocProvider(
+            create: (context) => QuestionControllerCubit(
+                dataBaseService: dataBaseService, fb_service: FB_Service())),
       ],
       child:
           BlocBuilder<ThemeCubit, ThemeState>(builder: (context, themestate) {

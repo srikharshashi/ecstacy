@@ -126,7 +126,7 @@ class _Question41State extends State<Question41> {
                                       .add(values[ind]);
                                 }
                               },
-                              buttons: ["crciket", "football", "F1", "tennis"],
+                              buttons: ["cricket", "football", "F1", "tennis"],
                             ),
                           ],
                         ),

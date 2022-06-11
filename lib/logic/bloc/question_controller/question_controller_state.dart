@@ -9,9 +9,13 @@ abstract class QuestionControllerState extends Equatable {
 
 class QuestionsHome extends QuestionControllerState {}
 
-class Questionsongoing extends QuestionControllerState{}
+class Questionsongoing extends QuestionControllerState {}
 
+class QuestionLoad extends QuestionControllerState {}
 
-class QuestionLoad extends QuestionControllerState{}
+class QuestionsSuccess extends QuestionControllerState {
+  User user;
+  QuestionsSuccess({required this.user});
+}
 
-class QuestionsSuccess extends QuestionControllerState{}
+class QuestionError extends QuestionControllerState {}
