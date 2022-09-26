@@ -129,7 +129,7 @@ class _Question6State extends State<Question6> {
                     ),
                     Container(
                       height: (height / (2.5)) * 0.4,
-                      child: ProgressBar(n: 6, page: 6),
+                      child: ProgressBar(n: 6, page: 5),
                     )
                   ],
                 ),
@@ -144,14 +144,14 @@ class _Question6State extends State<Question6> {
                       if (!BlocProvider.of<QuestionControllerCubit>(context)
                           .data["interest"]
                           .isEmpty) {
-                        Navigator.pushReplacementNamed(context, QUESTIONS_COMP);
+                        Navigator.pushReplacementNamed(context, SPOTIFYREG);
                       } else {
                         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                             content: Text("Select one of teh option")));
                       }
                     } else {
                       ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(content: Text("Select one of teh option")));
+                          SnackBar(content: Text("Select one of the options")));
                     }
                   },
                   child: Container(

@@ -1,4 +1,4 @@
-package com.example.dating_app
+package com.shashi.ecstacy
 
 import io.flutter.embedding.android.FlutterActivity
 

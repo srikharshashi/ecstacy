@@ -104,13 +104,13 @@ class _Questions_CompletedState extends State<Questions_Completed> {
                                 LoadingAnimationWidget.halfTringleDot(
                                     color: Theme.of(context).primaryColor,
                                     size: 45),
-                                ElevatedButton(
-                                    onPressed: () {
-                                      context
-                                          .read<QuestionControllerCubit>()
-                                          .submit();
-                                    },
-                                    child: Text("Get the doc"))
+                                // ElevatedButton(
+                                //     onPressed: () {
+                                //       context
+                                //           .read<QuestionControllerCubit>()
+                                //           .submit();
+                                //     },
+                                //     child: Text("Get the doc"))
                               ],
                             );
                           } else if (state is QuestionsSuccess) {

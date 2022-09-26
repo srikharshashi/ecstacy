@@ -55,9 +55,9 @@ class ProfilePage extends StatelessWidget {
                   Container(
                     height: 55,
                     width: double.infinity,
-                    child: RaisedButton(
+                    child: ElevatedButton(
                       onPressed: () {},
-                      color: Colors.black54,
+
                       child: Center(
                         child: Text(
                           "Update",

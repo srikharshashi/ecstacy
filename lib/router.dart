@@ -19,6 +19,7 @@ import 'package:bloc_custom_firebase/ui/screens/questions/question41.dart';
 import 'package:bloc_custom_firebase/ui/screens/questions/question6.dart';
 import 'package:bloc_custom_firebase/ui/screens/questions/question_home.dart';
 import 'package:bloc_custom_firebase/ui/screens/questions/questions_comp.dart';
+import 'package:bloc_custom_firebase/ui/screens/questions/spotifyregister.dart';
 import 'package:bloc_custom_firebase/ui/screens/spalsh_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
@@ -91,6 +92,9 @@ class AppRouter {
       case QUESTIONS_COMP:
         return PageTransition(
             child: Questions_Completed(), type: PageTransitionType.rightToLeft);
+      case SPOTIFYREG:
+        return PageTransition(
+            child: SpotifyRegister(), type: PageTransitionType.rightToLeft);
       default:
         return null;
     }

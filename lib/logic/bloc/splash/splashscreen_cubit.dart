@@ -28,15 +28,21 @@ class SplashscreenCubit extends Cubit<SplashscreenState> {
     }
 
     if (fb_service.checkSignin()) {
-      var user_map =
+      Map<dynamic, dynamic> user_map =
           await dataBaseService.getusermap(fb_service.get_user_email());
-      var user_obj = User.frommap(user_map);
 
-      if (user_obj.attemptedques)
-        emit(LoggedinQT(user: user_obj));
-      else
-        emit(LoggedinQF(user: user_obj));
-    } else
+      if (user_map.isEmpty) {
+        emit(UnAuthenticated());
+      } else {
+        User user_obj = User.frommap(user_map);
+
+        if (user_obj.attemptedques)
+          emit(LoggedinQT(user: user_obj));
+        else
+          emit(LoggedinQF(user: user_obj));
+      }
+    } else {
       emit(UnAuthenticated());
+    }
   }
 }

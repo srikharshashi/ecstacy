@@ -142,7 +142,7 @@ class _Question21State extends State<Question21> {
                             .data["pets"]
                             .add("dog");
                       }
-                      Navigator.pushReplacementNamed(context, QUESTION3);
+                      Navigator.pushReplacementNamed(context, QUESTION4);
                     } else {
                       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                           content: Text(

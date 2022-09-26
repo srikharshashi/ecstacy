@@ -126,7 +126,7 @@ class _Question2State extends State<Question2> {
                         Navigator.pushReplacementNamed(context, QUESTION21);
                       } else if (index == 1) {
                         //just leave the pets to be null
-                        Navigator.pushReplacementNamed(context, QUESTION3);
+                        Navigator.pushReplacementNamed(context, QUESTION4);
                       }
                     } else {
                       ScaffoldMessenger.of(context).showSnackBar(SnackBar(

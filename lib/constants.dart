@@ -22,3 +22,4 @@ const QUESTION41 = "/question41";
 const QUESTION5 = "/question5";
 const QUESTION6 = "/question6";
 const QUESTIONS_COMP = "/questionsc";
+const SPOTIFYREG = '/spotifyreg';

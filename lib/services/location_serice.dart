@@ -1,15 +1,16 @@
+import 'package:flutter_geocoder/geocoder.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:geocoding/geocoding.dart';
 
 class LocationService {
-  Future<List<Placemark>> getlocation() async {
+  Future<String> getlocation() async {
     Position position = await Geolocator.getCurrentPosition(
         desiredAccuracy: LocationAccuracy.high);
 
-    List<Placemark> placemarks =
-        await placemarkFromCoordinates(position.latitude, position.longitude);
-    print(placemarks);
-    return placemarks;
+    final addresses = await Geocoder.local.findAddressesFromCoordinates(
+        Coordinates(position.latitude, position.longitude));
+    String first = addresses.first.locality!;
+
+    return first;
   }
 
   Future<Position> getlatloc() async {

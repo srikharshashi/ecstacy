@@ -15,7 +15,7 @@ class QuestionControllerCubit extends Cubit<QuestionControllerState> {
   Map<String, dynamic> data = {
     "bio": "",
     "pets": [],
-    "music": [],
+    "genres": [],
     "sports": [],
     "employment": "",
     "interest": []
@@ -27,9 +27,8 @@ class QuestionControllerCubit extends Cubit<QuestionControllerState> {
 
   void submit() async {
     emit(QuestionLoad());
-    String email=fb_service.get_user_email();
-    bool val =
-        await dataBaseService.updatedata(data, email);
+    String email = fb_service.get_user_email();
+    bool val = await dataBaseService.updatedata(data, email);
     if (val) {
       var usermap = await dataBaseService.getusermap(email);
       emit(QuestionsSuccess(user: User.frommap(usermap)));

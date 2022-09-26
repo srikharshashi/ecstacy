@@ -12,11 +12,20 @@ class LocationCubit extends Cubit<LocationState> {
 
   void get_location() async {
     emit(LocationInitial());
-    var location = await locationService.getlocation();
-    var position = await locationService.getlatloc();
-    print(location[0].locality.toString());
-    emit(LocationSucess(
-        location: location[0].locality.toString(), position: position));
+    try {
+      var permission = await Geolocator.checkPermission();
+      if (permission == LocationPermission.denied) {
+        permission = await Geolocator.requestPermission();
+      }
+      print(permission.toString());
+      String location = await locationService.getlocation();
+      var position = await locationService.getlatloc();
+      print(location);
+      emit(LocationSucess(location: location, position: position));
+    } catch (e) {
+      print(e.toString());
+      emit(LocationError());
+    }
   }
 
   void reload() {

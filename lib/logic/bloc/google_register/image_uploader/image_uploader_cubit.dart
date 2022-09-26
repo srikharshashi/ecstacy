@@ -2,13 +2,13 @@ import 'dart:io';
 
 import 'package:bloc/bloc.dart';
 import 'package:bloc_custom_firebase/services/fb_storage.dart';
-import 'package:google_ml_kit/google_ml_kit.dart';
+// import 'package:google_mlkit_face_detection/google_mlkit_face_detection.dart';
 part 'image_uploader_state.dart';
 
 class ImageUploaderCubit extends Cubit<ImageUploaderState> {
   ImageUploaderCubit() : super(ImageUploaderInitial());
+  // final faceDetector = FaceDetector(options: FaceDetectorOptions());
 
-  final faceDetector = GoogleMlKit.vision.faceDetector();
   void uploadimage(File? image, String username) async {
     if (image != null) {
       emit(ImageVerifiyLoad());
@@ -27,15 +27,15 @@ class ImageUploaderCubit extends Cubit<ImageUploaderState> {
     }
   }
 
-  @override
-  void dispose() {
-    faceDetector.close();
-  }
+  // @override
+  // void dispose() {
+  //   faceDetector.close();
+  // }
 
   Future<int> doml(File file) async {
-    final inputImage = InputImage.fromFile(file);
-    final List<Face> faces = await faceDetector.processImage(inputImage);
-    return faces.length;
+    // final inputImage = InputImage.fromFile(file);
+    // final List<Face> faces = await faceDetector.processImage(inputImage);
+    return 1;
   }
 
   void reset() {

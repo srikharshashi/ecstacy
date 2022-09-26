@@ -19,3 +19,4 @@ class QuestionsSuccess extends QuestionControllerState {
 }
 
 class QuestionError extends QuestionControllerState {}
+

@@ -7,20 +7,12 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:798678783475:android:a35b3b3a378a0f37d82e86",
+        "mobilesdk_app_id": "1:798678783475:android:1cff28376a0c5fffd82e86",
         "android_client_info": {
-          "package_name": "com.example.dating_app"
+          "package_name": "com.shashi.ecstacy"
         }
       },
       "oauth_client": [
-        {
-          "client_id": "798678783475-6v4dtn3p1spqepmggj3b2on9nvp222uh.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.example.dating_app",
-            "certificate_hash": "98318da1ded5063bee677cc5f5009c6632b29096"
-          }
-        },
         {
           "client_id": "798678783475-n49c8nq35so9gfe27a8ib5346l2l72gh.apps.googleusercontent.com",
           "client_type": 3

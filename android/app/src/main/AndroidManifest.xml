@@ -1,11 +1,13 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.dating_app">
+    package="com.shashi.ecstacy">
         <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
         <uses-permission android:name=
     "android.permission.ACCESS_COARSE_LOCATION"/>
 
    <application
-        android:label="dating_app"
+        android:label="Ecstacy"
+        android:name="androidx.multidex.MultiDexApplication"
+        android:usesCleartextTraffic="true" 
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"
@@ -41,6 +43,15 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+        <activity android:name="com.linusu.flutter_web_auth_2.CallbackActivity" android:exported="true">
+	<intent-filter android:label="flutter_web_auth_2">
+		<action android:name="android.intent.action.VIEW" />
+		<category android:name="android.intent.category.DEFAULT" />
+		<category android:name="android.intent.category.BROWSABLE" />
+		<data android:scheme="com.shashi.ecstacy" /> <!-- This must correspond to the custom scheme used for instantiatng the client... See below -->
+	</intent-filter>
+</activity>
+
         <!-- Don't delete the meta-data below.
              This is used by the Flutter tool to generate GeneratedPluginRegistrant.java -->
         <meta-data

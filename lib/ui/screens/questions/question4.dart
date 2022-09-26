@@ -109,7 +109,7 @@ class _Question4State extends State<Question4> {
                     ),
                     Container(
                       height: (height / (2.5)) * 0.4,
-                      child: ProgressBar(n: 6, page: 4),
+                      child: ProgressBar(n: 6, page: 3),
                     )
                   ],
                 ),
